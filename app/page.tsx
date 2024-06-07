@@ -1,14 +1,18 @@
 import FoundResults from '@/components/FoundResults';
-import MovieSearch from '@/components/MovieSearch';
+import MovieInputSearch from '@/components/MovieInputSearch';
 import NavBar from '@/components/NavBar';
+import SearchedMovies from '@/components/SearchedMovies';
 
 export default function Home() {
   return (
     <>
       <NavBar>
-        <MovieSearch />
+        <MovieInputSearch />
         <FoundResults />
       </NavBar>
+      <main>
+        <SearchedMovies />
+      </main>
     </>
   );
 }
