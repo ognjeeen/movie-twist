@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Spinner from './Spinner';
 import Movies from './Movies';
 import ErrorMessage from './ErrorMessage';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 type Movie = {
   imdbID: string;
@@ -15,7 +16,8 @@ const SearchedMovies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const query = 'interstellar';
+
+  const { query } = useGlobalContext();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -45,6 +47,13 @@ const SearchedMovies = () => {
       } finally {
         setLoading(false);
       }
+    }
+
+    if (query.length < 2) {
+      setMovies([]);
+      setError('Start typing to search a movie');
+      setLoading(false);
+      return;
     }
 
     fetchMovies();
