@@ -5,17 +5,13 @@ import Spinner from './Spinner';
 import Movies from './Movies';
 import ErrorMessage from './ErrorMessage';
 import { useGlobalContext } from '@/context/GlobalContext';
-
-type Movie = {
-  imdbID: string;
-  Title: string;
-  Poster: string;
-};
+import SelectedMovies from './SelectedMovies';
 
 const SearchedMovies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedId, setSelectedId] = useState<string[]>([]);
 
   const { query } = useGlobalContext();
 
@@ -61,9 +57,29 @@ const SearchedMovies = () => {
 
   return (
     <>
-      {loading && <Spinner loading={loading} />}
-      {!loading && !error && <Movies movies={movies} />}
-      {error && <ErrorMessage message={error} />}
+      <div className="relative min-h-[300px]">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Spinner loading={loading} />
+          </div>
+        )}
+        {!loading && !error && (
+          <div className="absolute inset-0">
+            <Movies
+              movies={movies}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+            />
+          </div>
+        )}
+        {error && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <ErrorMessage message={error} />
+          </div>
+        )}
+      </div>
+
+      {selectedId && <SelectedMovies selectedId={selectedId} />}
     </>
   );
 };
