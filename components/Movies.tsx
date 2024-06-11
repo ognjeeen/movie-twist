@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Bounce, toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 type MoviesObject = {
   imdbID: string;
@@ -16,17 +15,35 @@ type MoviesProps = {
 const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
   const handleSelectMovie = (id: string) => {
     if (selectedId.includes(id)) {
-      toast.error('You cannot add the same movie twice', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Bounce,
-      });
+      toast(
+        (t) => (
+          <div className="flex flex-grow-1 text-sm lg:w-80 lg:text-base">
+            <div className="flex justify-center items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 text-customRed font-bold flex justify-center text-center"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                />
+              </svg>
+              <span>You cannot add the same movie twice</span>
+            </div>
+          </div>
+        ),
+        {
+          style: {
+            background: '#343a40',
+            color: '#dee2e6',
+          },
+        }
+      );
     } else {
       setSelectedId((prev) => [...prev, id]);
     }
@@ -34,7 +51,7 @@ const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
 
   return (
     <div className="overflow-x-auto">
-      <ul className="flex flex-nowrap md:justify-center m-auto mt-10 pl-4 lg:pl-0">
+      <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 justify-start lg:justify-start xl:justify-center">
         {movies
           .slice(0, 8)
           .filter((movie) => movie.Poster !== 'N/A')
@@ -44,13 +61,12 @@ const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
               key={movie.imdbID}
               className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer"
             >
-              <Image
+              <img
                 className="w-full p-4"
                 alt={movie.Title}
                 src={movie.Poster}
                 width={100}
                 height={150}
-                priority={true}
               />
               <h3 className="text-center text-white">{movie.Title}</h3>
             </li>

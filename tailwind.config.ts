@@ -7,15 +7,17 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      background: '#212529',
-      backgroundLight: '#343a40',
-      primary: '#C59658',
-      primaryLight: '#e1ab65',
-      textColor: '#dee2e6',
-      textDarkColor: '#adb5bd',
-      red: '#fa5252',
-      redDark: '#e03131',
+    extend: {
+      colors: {
+        background: '#212529',
+        backgroundLight: '#343a40',
+        primary: '#C59658',
+        primaryLight: '#e1ab65',
+        textColor: '#dee2e6',
+        textDarkColor: '#adb5bd',
+        customRed: '#fa5252',
+        redDark: '#e03131',
+      },
     },
   },
 };

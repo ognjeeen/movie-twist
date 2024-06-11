@@ -79,7 +79,9 @@ const SearchedMovies = () => {
         )}
       </div>
 
-      {selectedId && <SelectedMovies selectedId={selectedId} />}
+      {selectedId && (
+        <SelectedMovies selectedId={selectedId} setSelectedId={setSelectedId} />
+      )}
     </>
   );
 };
