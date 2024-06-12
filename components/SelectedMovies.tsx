@@ -97,15 +97,15 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
           </li>
         ))}
       </ul>
-      <div className="flex gap-4 justify-center pb-2">
+      <div className="flex flex-col gap-2 justify-center pb-2 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base">
         <button
           onClick={handleDeleteAll}
-          className="p-2 border-none rounded-lg bg-primary w-40"
+          className="p-2 border-none rounded-lg bg-primary w-4/5 lg:w-40"
         >
-          Clear all
+          Clear All
         </button>
-        <button className="p-2 border-none rounded-lg bg-primary w-40">
-          Random movie
+        <button className="p-2 border-none rounded-lg bg-primary w-4/5 lg:w-40">
+          Random Movie
         </button>
       </div>
     </div>
