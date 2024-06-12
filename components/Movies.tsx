@@ -62,11 +62,9 @@ const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
               className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer"
             >
               <img
-                className="w-full p-4"
+                className="w-36 h-52 object-cover p-4"
                 alt={movie.Title}
                 src={movie.Poster}
-                width={100}
-                height={150}
               />
               <h3 className="text-center text-white">{movie.Title}</h3>
             </li>

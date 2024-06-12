@@ -89,10 +89,9 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
           <li key={movie?.imdbID} className="p-4">
             <div>
               <img
+                className="w-28 h-44 object-cover"
                 alt={movie?.Title}
                 src={movie?.Poster}
-                width={100}
-                height={150}
               />
             </div>
           </li>
