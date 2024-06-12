@@ -1,4 +1,3 @@
-import FoundResultsMessage from '@/components/FoundResultsMessage';
 import MovieInputSearch from '@/components/MovieInputSearch';
 import NavBar from '@/components/NavBar';
 import SearchedMovies from '@/components/SearchedMovies';
@@ -8,7 +7,6 @@ export default function Home() {
     <>
       <NavBar>
         <MovieInputSearch />
-        <FoundResultsMessage />
       </NavBar>
       <main>
         <SearchedMovies />

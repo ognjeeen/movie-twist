@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Spinner from './Spinner';
 import Movies from './Movies';
 import ErrorMessage from './ErrorMessage';
@@ -8,6 +8,7 @@ import { useGlobalContext } from '@/context/GlobalContext';
 import SelectedMovies from './SelectedMovies';
 
 const SearchedMovies = () => {
+  const controllerRef = useRef<AbortController>();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -16,13 +17,21 @@ const SearchedMovies = () => {
   const { query } = useGlobalContext();
 
   useEffect(() => {
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+
     async function fetchMovies() {
       setLoading(true);
       setError('');
 
       try {
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=8654544c&s=${query}`
+          `http://www.omdbapi.com/?apikey=8654544c&s=${query}`,
+          { signal }
         );
 
         if (!res.ok) {
@@ -36,7 +45,9 @@ const SearchedMovies = () => {
       } catch (error) {
         console.log(error);
         if (error instanceof Error) {
-          setError(error.message);
+          if (error.name !== 'AbortError') {
+            setError(error.message);
+          }
         } else {
           setError('An unknown error occurred');
         }
