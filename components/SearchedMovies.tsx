@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Spinner from './Spinner';
-import Movies from './Movies';
+import SearchedMoviesList from './SearchedMoviesList';
 import ErrorMessage from './ErrorMessage';
 import { useGlobalContext } from '@/context/GlobalContext';
 import SelectedMovies from './SelectedMovies';
@@ -43,7 +43,6 @@ const SearchedMovies = () => {
 
         setMovies(data.Search);
       } catch (error) {
-        console.log(error);
         if (error instanceof Error) {
           if (error.name !== 'AbortError') {
             setError(error.message);
@@ -76,7 +75,7 @@ const SearchedMovies = () => {
         )}
         {!loading && !error && (
           <div className="absolute inset-0">
-            <Movies
+            <SearchedMoviesList
               movies={movies}
               selectedId={selectedId}
               setSelectedId={setSelectedId}

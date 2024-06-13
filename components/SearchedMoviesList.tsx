@@ -1,18 +1,22 @@
 import toast from 'react-hot-toast';
 
-type MoviesObject = {
+type SearchedMoviesList = {
   imdbID: string;
   Title: string;
   Poster: string;
 };
 
-type MoviesProps = {
-  movies: MoviesObject[];
+type SearchedMoviesListProps = {
+  movies: SearchedMoviesList[];
   selectedId: string[];
   setSelectedId: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
+const SearchedMoviesList = ({
+  movies,
+  selectedId,
+  setSelectedId,
+}: SearchedMoviesListProps) => {
   const handleSelectMovie = (id: string) => {
     if (selectedId.includes(id)) {
       toast(
@@ -74,4 +78,4 @@ const Movies = ({ movies, selectedId, setSelectedId }: MoviesProps) => {
   );
 };
 
-export default Movies;
+export default SearchedMoviesList;

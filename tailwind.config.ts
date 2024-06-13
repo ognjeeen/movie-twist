@@ -13,6 +13,7 @@ const config: Config = {
         backgroundLight: '#343a40',
         primary: '#C59658',
         primaryLight: '#e1ab65',
+        buttonHover: '#b1874f',
         textColor: '#dee2e6',
         textDarkColor: '#adb5bd',
         customRed: '#fa5252',
