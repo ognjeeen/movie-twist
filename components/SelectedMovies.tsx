@@ -100,7 +100,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
     // Button click effect duration
     setTimeout(() => {
       setIsButtonAnimationActive((prev) => !prev);
-    }, 600);
+    }, 500);
   };
 
   if (movies.length === 0) return null;
