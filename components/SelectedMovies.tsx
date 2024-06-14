@@ -1,7 +1,9 @@
 'use client';
+import { useGlobalContext } from '@/context/GlobalContext';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useGlobalContext } from '@/context/GlobalContext';
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
 
 type SelectedMoviesProps = {
   selectedId: string[];
@@ -20,9 +22,12 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
   const [isRandomMovieAnimationActive, setRandomMovieAnimationActive] =
     useState(false);
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
+  const [numberOfPieces, setNumberOfPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
 
   const { setQuery } = useGlobalContext();
+
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -99,6 +104,12 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
       setPickedMovie(movies[randomNumber]);
       setRandomMovieAnimationActive(false);
       setIsOpen(true);
+
+      // Confetti animation
+      setNumberOfPieces(200);
+      setTimeout(() => {
+        setNumberOfPieces(0);
+      }, 2000);
     }, 2000);
 
     // Button click effect duration
@@ -154,6 +165,11 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
       {/* Picked random movie section */}
       {pickedMovie && isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+          <Confetti
+            width={width}
+            height={height}
+            numberOfPieces={numberOfPieces}
+          />
           <div className="pt-10 bg-backgroundLight rounded-lg relative max-w-lg w-full mx-4">
             <img
               className="w-48 h-72 object-cover mx-auto"
