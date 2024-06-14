@@ -70,7 +70,9 @@ const SearchedMoviesList = ({
                 alt={movie.Title}
                 src={movie.Poster}
               />
-              <h3 className="text-center text-white">{movie.Title}</h3>
+              <h3 className="text-center text-white line-clamp-2">
+                {movie.Title}
+              </h3>
             </li>
           ))}
       </ul>
