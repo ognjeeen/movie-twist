@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 type SelectedMoviesProps = {
   selectedId: string[];
@@ -20,6 +21,8 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
     useState(false);
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { setQuery } = useGlobalContext();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -59,6 +62,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
               onClick={() => {
                 setMovies([]);
                 setSelectedId([]);
+                setQuery('');
                 toast.dismiss(t.id);
               }}
               className="text-green-500 p-2 font-bold hover:text-green-600"
