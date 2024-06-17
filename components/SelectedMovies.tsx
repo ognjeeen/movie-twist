@@ -1,9 +1,9 @@
 'use client';
 import { useGlobalContext } from '@/context/GlobalContext';
 import { useEffect, useState } from 'react';
+import Confetti from 'react-confetti';
 import toast from 'react-hot-toast';
 import useWindowSize from 'react-use/lib/useWindowSize';
-import Confetti from 'react-confetti';
 
 type SelectedMoviesProps = {
   selectedId: string[];

@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import Spinner from './Spinner';
-import SearchedMoviesList from './SearchedMoviesList';
-import ErrorMessage from './ErrorMessage';
 import { useGlobalContext } from '@/context/GlobalContext';
+import { useEffect, useRef, useState } from 'react';
+import ErrorMessage from './ErrorMessage';
+import SearchedMoviesList from './SearchedMoviesList';
 import SelectedMovies from './SelectedMovies';
+import Spinner from './Spinner';
 
 const SearchedMovies = () => {
   const controllerRef = useRef<AbortController>();
