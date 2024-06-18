@@ -5,7 +5,7 @@ type NavBarProps = {
 const NavBar = ({ children }: NavBarProps) => {
   return (
     <nav>
-      <div className="md:flex-row md:gap-12 mt-10 flex flex-col gap-4 justify-center p-10">
+      <div className="flex flex-col mt-10 justify-center m-auto items-center gap-4">
         {children}
       </div>
     </nav>

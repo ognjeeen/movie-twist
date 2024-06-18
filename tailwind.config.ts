@@ -19,6 +19,9 @@ const config: Config = {
         customRed: '#fa5252',
         redDark: '#e03131',
       },
+      fontFamily: {
+        Bungee: ['Bungee'],
+      },
     },
   },
 };

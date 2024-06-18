@@ -83,7 +83,7 @@ const SearchedMoviesList = ({
                 onLoad={() => setImageLoaded(true)}
               />
               <h3
-                className={`text-center text-white line-clamp-2 ${
+                className={`text-center line-clamp-2 text-white ${
                   !imageLoaded && 'hidden'
                 }`}
               >

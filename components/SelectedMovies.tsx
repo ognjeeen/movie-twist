@@ -122,7 +122,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
 
   return (
     <>
-      <div className="bg-backgroundLight w-3/5 mt-10 rounded-lg m-auto mb-10 relative">
+      <div className="bg-backgroundLight w-3/5 mt-10 rounded-lg m-auto mb-10 relative drop-shadow-lg pt-6">
         <ul
           className={`flex flex-wrap justify-center ${
             isRandomMovieAnimationActive ? 'animate-merge' : ''
@@ -142,7 +142,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
         </ul>
 
         {/* Clear All & Random Movie buttons */}
-        <div className="flex flex-col gap-2 justify-center pb-4 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base">
+        <div className="flex flex-col gap-2 justify-center pb-4 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base font-Bungee text-textColor mt-10">
           <button
             onClick={handleDeleteAll}
             disabled={isRandomMovieAnimationActive}
@@ -171,12 +171,15 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
             numberOfPieces={numberOfPieces}
           />
           <div className="pt-10 bg-backgroundLight rounded-lg relative max-w-lg w-full mx-4">
+            <h1 className="text-primaryLight text-center pb-10 text-5xl font-Bungee">
+              Go Watch
+            </h1>
             <img
               className="w-48 h-72 object-cover mx-auto"
               alt={pickedMovie.Title}
               src={pickedMovie.Poster}
             />
-            <h2 className="text-xl mb-4 text-center mt-2 pb-2">
+            <h2 className="text-xl mb-4 text-center mt-2 pb-6">
               {pickedMovie.Title}
             </h2>
             <button
@@ -189,7 +192,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-8 text-primary "
+                className="size-9 text-primary hover:text-primaryLight"
               >
                 <path
                   strokeLinecap="round"
