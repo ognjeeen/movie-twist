@@ -57,10 +57,13 @@ const SearchedMoviesList = ({
 
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
+  // Movies without a poster are not included in a search list
+  const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
+
   return (
     <div className="overflow-x-auto">
       <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 justify-start lg:justify-start xl:justify-center gap-2">
-        {movies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
             onClick={() => handleSelectMovie(movie.imdbID)}
