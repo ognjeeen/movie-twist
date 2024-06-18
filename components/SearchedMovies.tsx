@@ -30,7 +30,7 @@ const SearchedMovies = () => {
 
       try {
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=8654544c&s=${query}`,
+          `https://www.omdbapi.com/?apikey=8654544c&s=${query}`,
           { signal }
         );
 

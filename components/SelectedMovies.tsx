@@ -37,7 +37,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
         const fetchedMovies = await Promise.all(
           selectedId.map(async (id) => {
             const res = await fetch(
-              `http://www.omdbapi.com/?apikey=8654544c&i=${id}`
+              `https://www.omdbapi.com/?apikey=8654544c&i=${id}`
             );
             const data = await res.json();
             return data;
