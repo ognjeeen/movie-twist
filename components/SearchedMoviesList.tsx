@@ -20,6 +20,40 @@ const SearchedMoviesList = ({
   setSelectedId,
 }: SearchedMoviesListProps) => {
   const handleSelectMovie = (id: string) => {
+    if (selectedId.length >= 8) {
+      toast(
+        (t) => (
+          <div className="flex flex-grow-1 text-sm lg:w-80 lg:text-base">
+            <div className="flex justify-center items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 text-customRed font-bold flex justify-center text-center"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                />
+              </svg>
+              <span>Maximum movies able to select is 8</span>
+            </div>
+          </div>
+        ),
+        {
+          style: {
+            background: '#343a40',
+            color: '#dee2e6',
+          },
+        }
+      );
+
+      return;
+    }
+
     if (selectedId.includes(id)) {
       toast(
         (t) => (
@@ -50,6 +84,8 @@ const SearchedMoviesList = ({
           },
         }
       );
+
+      return;
     } else {
       setSelectedId((prev) => [...prev, id]);
     }

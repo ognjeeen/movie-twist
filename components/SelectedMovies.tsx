@@ -94,6 +94,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
     );
   };
 
+  // Function for picking random movie from selected movies list
   const handlePickRandomMovie = () => {
     setIsButtonAnimationActive(true);
     setRandomMovieAnimationActive(true);
