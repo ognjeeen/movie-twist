@@ -5,121 +5,109 @@ import Confetti from 'react-confetti';
 import toast from 'react-hot-toast';
 import useWindowSize from 'react-use/lib/useWindowSize';
 
-type SelectedMoviesProps = {
-  selectedId: string[];
-  setSelectedId: React.Dispatch<React.SetStateAction<string[]>>;
-};
-
 type MovieObject = {
   imdbID: string;
   Title: string;
   Poster: string;
 };
 
-const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
-  const [movies, setMovies] = useState<MovieObject[]>([]);
+type SelectedMoviesProps = {
+  selectedId: string | null;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
+  movies: MovieObject[];
+};
+
+const SelectedMovies = ({
+  selectedId,
+  setSelectedId,
+  movies,
+}: SelectedMoviesProps) => {
   const [pickedMovie, setPickedMovie] = useState<MovieObject | null>(null);
+  const [selectedMovies, setSelectedMovies] = useState<MovieObject[]>([]);
+  const [clickedIds, setClickedIds] = useState<string[]>([]);
   const [isRandomMovieAnimationActive, setRandomMovieAnimationActive] =
     useState(false);
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
   const [numberOfPieces, setNumberOfPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
-
   const { setQuery } = useGlobalContext();
-
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    async function fetchMovies() {
-      if (selectedId.length === 0) return;
+    if (selectedId && clickedIds.includes(selectedId)) {
+      toast.error('Movie is already in the list');
+    } else if (selectedId) {
+      const filter = movies.find((movie) => movie.imdbID === selectedId);
 
-      try {
-        const fetchedMovies = await Promise.all(
-          selectedId.map(async (id) => {
-            const res = await fetch(
-              `https://www.omdbapi.com/?apikey=8654544c&i=${id}`
-            );
-            const data = await res.json();
-            return data;
-          })
+      if (filter) {
+        const alreadySelected = selectedMovies.some(
+          (movie) => movie.imdbID === filter.imdbID
         );
 
-        const filteredMovies = fetchedMovies.filter(
-          (movie) => movie.Poster && movie.Poster !== 'N/A'
-        );
+        if (!alreadySelected) {
+          setSelectedMovies((prevSelectedMovies) => [
+            ...prevSelectedMovies,
+            filter,
+          ]);
+        }
 
-        setMovies(filteredMovies);
-      } catch (error) {
-        console.log('Error fetching movie data:', error);
+        setClickedIds((prevClickedIds) => [...prevClickedIds, selectedId]);
       }
     }
-
-    fetchMovies();
   }, [selectedId]);
 
   const handleDeleteAll = () => {
-    toast(
-      (t) => (
-        <div className="text-base lg:text-lg">
-          <span>Are you sure you want to remove all movies from list?</span>
-          <div className="flex gap-4 mt-2">
-            <button
-              onClick={() => {
-                setMovies([]);
-                setSelectedId([]);
-                setQuery('');
-                toast.dismiss(t.id);
-              }}
-              className="text-green-500 p-2 font-bold hover:text-green-600"
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => {
-                toast.dismiss(t.id);
-              }}
-              className="text-red-500 p-2 font-bold hover:text-red-600"
-            >
-              No
-            </button>
-          </div>
+    toast((t) => (
+      <div className="text-base lg:text-lg">
+        <span>Are you sure you want to remove all movies from list?</span>
+        <div className="flex gap-4 mt-2">
+          <button
+            onClick={() => {
+              setSelectedMovies([]);
+              setSelectedId(null);
+              setClickedIds([]);
+              setQuery('');
+              toast.dismiss(t.id);
+            }}
+            className="text-green-500 p-2 font-bold hover:text-green-600"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+            }}
+            className="text-red-500 p-2 font-bold hover:text-red-600"
+          >
+            No
+          </button>
         </div>
-      ),
-      {
-        style: {
-          background: '#343a40',
-          color: '#dee2e6',
-        },
-      }
-    );
+      </div>
+    ));
   };
 
-  // Function for picking random movie from selected movies list
   const handlePickRandomMovie = () => {
     setIsButtonAnimationActive(true);
     setRandomMovieAnimationActive(true);
 
-    // Animation duration for and while choosing random movie
     setTimeout(() => {
-      const randomNumber = Math.floor(Math.random() * movies.length);
-      setPickedMovie(movies[randomNumber]);
+      const randomNumber = Math.floor(Math.random() * selectedMovies.length);
+      setPickedMovie(selectedMovies[randomNumber]);
       setRandomMovieAnimationActive(false);
       setIsOpen(true);
 
-      // Confetti animation
       setNumberOfPieces(200);
       setTimeout(() => {
         setNumberOfPieces(0);
       }, 2000);
     }, 2000);
 
-    // Button click effect duration
     setTimeout(() => {
       setIsButtonAnimationActive((prev) => !prev);
     }, 500);
   };
 
-  if (movies.length === 0) return null;
+  if (selectedMovies.length === 0) return null;
 
   return (
     <>
@@ -129,7 +117,7 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
             isRandomMovieAnimationActive ? 'animate-merge' : ''
           }`}
         >
-          {movies.map((movie) => (
+          {selectedMovies.map((movie) => (
             <li key={movie.imdbID} className="p-4">
               <div>
                 <img
@@ -142,7 +130,6 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
           ))}
         </ul>
 
-        {/* Clear All & Random Movie buttons */}
         <div className="flex flex-col gap-2 justify-center pb-4 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base font-Bungee text-textColor mt-10">
           <button
             onClick={handleDeleteAll}
@@ -163,7 +150,6 @@ const SelectedMovies = ({ selectedId, setSelectedId }: SelectedMoviesProps) => {
         </div>
       </div>
 
-      {/* Picked random movie section */}
       {pickedMovie && isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
           <Confetti

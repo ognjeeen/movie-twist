@@ -10,8 +10,8 @@ type SearchedMoviesList = {
 
 type SearchedMoviesListProps = {
   movies: SearchedMoviesList[];
-  selectedId: string[];
-  setSelectedId: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedId: string | null;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const SearchedMoviesList = ({
@@ -19,79 +19,21 @@ const SearchedMoviesList = ({
   selectedId,
   setSelectedId,
 }: SearchedMoviesListProps) => {
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [clickedIds, setClickedIds] = useState<string[]>([]);
+
   const handleSelectMovie = (id: string) => {
-    if (selectedId.length >= 8) {
-      toast(
-        (t) => (
-          <div className="flex flex-grow-1 text-sm lg:w-80 lg:text-base">
-            <div className="flex justify-center items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6 text-customRed font-bold flex justify-center text-center"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                />
-              </svg>
-              <span>Maximum movies able to select is 8</span>
-            </div>
-          </div>
-        ),
-        {
-          style: {
-            background: '#343a40',
-            color: '#dee2e6',
-          },
-        }
-      );
-
-      return;
-    }
-
-    if (selectedId.includes(id)) {
-      toast(
-        (t) => (
-          <div className="flex flex-grow-1 text-sm lg:w-80 lg:text-base">
-            <div className="flex justify-center items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6 text-customRed font-bold flex justify-center text-center"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                />
-              </svg>
-              <span>You cannot add the same movie twice</span>
-            </div>
-          </div>
-        ),
-        {
-          style: {
-            background: '#343a40',
-            color: '#dee2e6',
-          },
-        }
-      );
-
-      return;
+    if (id === selectedId) {
+      toast.error('Movie is already in the list');
     } else {
-      setSelectedId((prev) => [...prev, id]);
+      if (!clickedIds.includes(id)) {
+        setClickedIds((prevClickedIds) => [...prevClickedIds, id]);
+        setSelectedId(id);
+      } else {
+        toast.error('Movie is already in the list');
+      }
     }
   };
-
-  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   // Movies without a poster are not included in a search list
   const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
@@ -102,7 +44,6 @@ const SearchedMoviesList = ({
         {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
-            onClick={() => handleSelectMovie(movie.imdbID)}
             className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer"
           >
             <div
@@ -117,6 +58,7 @@ const SearchedMoviesList = ({
                 alt={movie.Title}
                 src={movie.Poster}
                 onLoad={() => setImageLoaded(true)}
+                onClick={() => handleSelectMovie(movie.imdbID)}
               />
               <h3
                 className={`text-center line-clamp-2 text-white ${

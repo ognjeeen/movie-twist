@@ -7,12 +7,18 @@ import SearchedMoviesList from './SearchedMoviesList';
 import SelectedMovies from './SelectedMovies';
 import Spinner from './Spinner';
 
+type MovieObject = {
+  imdbID: string;
+  Title: string;
+  Poster: string;
+};
+
 const SearchedMovies = () => {
   const controllerRef = useRef<AbortController>();
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<MovieObject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [selectedId, setSelectedId] = useState<string[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { query } = useGlobalContext();
 
@@ -89,9 +95,11 @@ const SearchedMovies = () => {
         )}
       </div>
 
-      {selectedId && (
-        <SelectedMovies selectedId={selectedId} setSelectedId={setSelectedId} />
-      )}
+      <SelectedMovies
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        movies={movies}
+      />
     </>
   );
 };

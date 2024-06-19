@@ -22,7 +22,11 @@ export default function RootLayout({
       <html lang="en" className="bg-background text-textColor">
         <body className={inter.className}>
           <main>{children}</main>
-          <Toaster />
+          <Toaster
+            toastOptions={{
+              style: { background: '#343a40', color: '#dee2e6' },
+            }}
+          />
         </body>
       </html>
     </GlobalProvider>
