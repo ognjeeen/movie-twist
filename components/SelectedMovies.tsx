@@ -155,7 +155,7 @@ const SelectedMovies = ({
       </div>
 
       {pickedMovie && isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10">
           <Confetti
             width={width}
             height={height}
@@ -187,7 +187,11 @@ const SelectedMovies = ({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-9 text-primary hover:text-primaryLight"
+                className={`size-9 ${
+                  animeMode
+                    ? 'text-animeBluePrimary hover:text-animeBlueButtonHover'
+                    : 'text-primary hover:text-primaryLight'
+                }`}
               >
                 <path
                   strokeLinecap="round"

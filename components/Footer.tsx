@@ -6,9 +6,9 @@ const Footer = () => {
   const { toggleAnimeMode } = useGlobalContext();
 
   return (
-    <div className="bg-gray bottom-0 w-full pb-4 2xl:fixed font-Bungee select-none -z-10">
-      <div className="md:flex md:justify-between items-center w-11/12 m-auto">
-        <div className="flex gap-6">
+    <div className="bg-gray bottom-0 w-full pb-4 2xl:fixed font-Bungee select-none text-sm md:text-base">
+      <div className="md:flex md:justify-between items-center m-auto justify-center w-11/12">
+        <div className="flex gap-6 justify-center">
           <div>Anime mode</div>
           <label className="inline-flex items-center cursor-pointer">
             <input
@@ -23,7 +23,7 @@ const Footer = () => {
             </span>
           </label>
         </div>
-        <div className="flex justify-center md:block">FAQ</div>
+        <div className="flex justify-center pt-1">FAQ</div>
       </div>
     </div>
   );

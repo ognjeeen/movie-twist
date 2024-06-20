@@ -6,17 +6,19 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <NavBar>
         <MovieTwistTitle />
         <MovieInputSearch />
       </NavBar>
-      <main>
+
+      <main className="flex-grow">
         <SearchedMovies />
       </main>
-      <footer>
+
+      <footer className="text-sm md:text-base">
         <Footer />
       </footer>
-    </>
+    </div>
   );
 }
