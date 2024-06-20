@@ -30,24 +30,27 @@ const SelectedMovies = ({
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
   const [numberOfPieces, setNumberOfPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
-  const { setQuery } = useGlobalContext();
+  const { setQuery, animeMode } = useGlobalContext();
   const { width, height } = useWindowSize();
+  const buttonColor = animeMode
+    ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover'
+    : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover';
 
   useEffect(() => {
     if (selectedId && clickedIds.includes(selectedId)) {
       toast.error('Movie is already in the list');
     } else if (selectedId) {
-      const filter = movies.find((movie) => movie.imdbID === selectedId);
+      const movieFilter = movies.find((movie) => movie.imdbID === selectedId);
 
-      if (filter) {
+      if (movieFilter) {
         const alreadySelected = selectedMovies.some(
-          (movie) => movie.imdbID === filter.imdbID
+          (movie) => movie.imdbID === movieFilter.imdbID
         );
 
         if (!alreadySelected) {
           setSelectedMovies((prevSelectedMovies) => [
             ...prevSelectedMovies,
-            filter,
+            movieFilter,
           ]);
         }
 
@@ -134,18 +137,19 @@ const SelectedMovies = ({
           <button
             onClick={handleDeleteAll}
             disabled={isRandomMovieAnimationActive}
-            className="p-2 border-none rounded-lg bg-primary hover:bg-buttonHover w-4/5 lg:w-40 disabled:bg-buttonHover"
+            className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40 `}
           >
             Clear All
           </button>
           <button
             onClick={handlePickRandomMovie}
             disabled={isRandomMovieAnimationActive}
-            className={`button ${
-              isButtonAnimationActive ? 'animate z-10' : ''
-            } p-2 border-none rounded-lg bg-primary hover:bg-buttonHover w-4/5 lg:w-40 disabled:bg-buttonHover`}
+            className={`
+              button ${isButtonAnimationActive ? 'animate z-10' : ''}
+              ${animeMode ? 'dark-mode' : ''}
+              p-2 border-none rounded-lg w-4/5 lg:w-40 ${buttonColor}`}
           >
-            Random Movie
+            Random {animeMode ? 'Anime' : 'Movie'}
           </button>
         </div>
       </div>
@@ -158,7 +162,11 @@ const SelectedMovies = ({
             numberOfPieces={numberOfPieces}
           />
           <div className="pt-10 bg-backgroundLight rounded-lg relative max-w-lg w-full mx-4">
-            <h1 className="text-primaryLight text-center pb-10 text-5xl font-Bungee">
+            <h1
+              className={`${
+                animeMode ? 'text-animeBlueLight' : 'text-primaryLight'
+              } text-center pb-10 text-5xl font-Bungee`}
+            >
               Go Watch
             </h1>
             <img

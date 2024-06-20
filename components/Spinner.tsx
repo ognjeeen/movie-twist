@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/context/GlobalContext';
 import MoonLoader from 'react-spinners/MoonLoader';
 
 type SpinnerProps = {
@@ -10,9 +11,13 @@ const override = {
 };
 
 const Spinner = ({ loading }: SpinnerProps) => {
+  const { animeMode } = useGlobalContext();
+
+  const spinnerColor = animeMode ? '#399a99' : '#C59658';
+
   return (
     <MoonLoader
-      color="#C59658"
+      color={spinnerColor}
       loading={loading}
       cssOverride={override}
       size={50}

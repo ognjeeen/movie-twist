@@ -2,6 +2,7 @@ import MovieInputSearch from '@/components/MovieInputSearch';
 import NavBar from '@/components/NavBar';
 import SearchedMovies from '@/components/SearchedMovies';
 import MovieTwistTitle from '@/components/MovieTwistTitle';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
       <main>
         <SearchedMovies />
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }

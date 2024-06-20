@@ -16,8 +16,10 @@ const config: Config = {
         buttonHover: '#b1874f',
         textColor: '#dee2e6',
         textDarkColor: '#adb5bd',
-        customRed: '#fa5252',
-        redDark: '#e03131',
+
+        animeBluePrimary: '#399a99',
+        animeBlueLight: '#95d2d3',
+        animeBlueButtonHover: '#2e7b7a',
       },
       fontFamily: {
         Bungee: ['Bungee'],
