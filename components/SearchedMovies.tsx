@@ -6,6 +6,7 @@ import ErrorMessage from './ErrorMessage';
 import SearchedMoviesList from './SearchedMoviesList';
 import SelectedMovies from './SelectedMovies';
 import Spinner from './Spinner';
+import axios from 'axios';
 
 type MovieObject = {
   imdbID: string;
@@ -16,12 +17,11 @@ type MovieObject = {
 const SearchedMovies = () => {
   const controllerRef = useRef<AbortController>();
   const [movies, setMovies] = useState<MovieObject[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { query } = useGlobalContext();
-
   useEffect(() => {
     if (controllerRef.current) {
       controllerRef.current.abort();
@@ -35,24 +35,19 @@ const SearchedMovies = () => {
       setError('');
 
       try {
-        const res = await fetch(
-          `https://www.omdbapi.com/?apikey=8654544c&s=${query}`,
-          { signal }
-        );
+        const response = await axios.get(`/api/fetchMovies`, {
+          params: { query },
+          signal,
+        });
 
-        if (!res.ok) {
-          throw new Error('Something went wrong with fetching movies!');
-        }
-
-        const data = await res.json();
+        const data = response.data;
         if (data.Response === 'False') throw new Error('Movie not found');
 
         setMovies(data.Search);
       } catch (error) {
-        if (error instanceof Error) {
-          if (error.name !== 'AbortError') {
-            setError(error.message);
-          }
+        if (axios.isCancel(error)) {
+        } else if (error instanceof Error) {
+          setError(error.message);
         } else {
           setError('An unknown error occurred');
         }
@@ -69,6 +64,12 @@ const SearchedMovies = () => {
     }
 
     fetchMovies();
+
+    return () => {
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+    };
   }, [query]);
 
   return (
