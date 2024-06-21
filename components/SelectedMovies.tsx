@@ -62,7 +62,10 @@ const SelectedMovies = ({
   const handleDeleteAll = () => {
     toast((t) => (
       <div className="text-base lg:text-lg">
-        <span>Are you sure you want to remove all movies from list?</span>
+        <span>
+          Are you sure you want to remove all {animeMode ? 'anime' : 'movies'}{' '}
+          from list?
+        </span>
         <div className="flex gap-4 mt-2">
           <button
             onClick={() => {
