@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { GlobalProvider } from '@/context/GlobalContext';
 import { Toaster } from 'react-hot-toast';
+import GoogleAnalytics from '@/GoogleAnalytics';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             }}
           />
         </body>
+        <GoogleAnalytics />
       </html>
     </GlobalProvider>
   );
