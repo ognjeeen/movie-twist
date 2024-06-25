@@ -36,8 +36,6 @@ const faqData: FAQItem[] = [
 const FAQSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const startYRef = useRef<number>(0);
-  const endYRef = useRef<number>(0);
 
   const debounce = (func: (...args: any[]) => void, wait: number) => {
     let timeout: NodeJS.Timeout;
@@ -60,25 +58,6 @@ const FAQSection = () => {
     []
   );
 
-  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    startYRef.current = event.touches[0].clientY;
-  };
-
-  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    endYRef.current = event.touches[0].clientY;
-  };
-
-  const handleTouchEnd = () => {
-    const deltaY = startYRef.current - endYRef.current;
-    if (deltaY > 50) {
-      setCurrentIndex((prevIndex) =>
-        Math.min(prevIndex + 1, faqData.length - 1)
-      );
-    } else if (deltaY < -50) {
-      setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-    }
-  };
-
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({
@@ -89,17 +68,11 @@ const FAQSection = () => {
   }, [currentIndex]);
 
   return (
-    <div
-      className="h-full w-full md:flex"
-      onWheel={handleScroll}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className="h-full w-full md:flex" onWheel={handleScroll}>
       <div className="items-center pr-4 flex justify-center md:justify-end lg:w-3/6 md:pt-0">
         <div className="flex flex-col text-center text-primaryLight pt-4">
           <h1 className="text-4xl font-bold">FAQ</h1>
-          <span>Scroll or swipe to see all FAQ</span>
+          <span>Scroll to see all FAQ</span>
           <Link href="/">&larr; Go back</Link>
         </div>
       </div>
