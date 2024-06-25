@@ -12,24 +12,24 @@ const faqData: FAQItem[] = [
   {
     question: 'What is this application?',
     answer:
-      'Movie Twist is application built using Next.js with TailwindCSS and TypeScript. Movie Twist helps you to decide what movie you should watch from your provided list of selected movies,',
+      'Movie Twist is an application built using Next.js with TailwindCSS and TypeScript. Movie Twist helps you decide what movie you should watch from your provided list of selected movies,',
   },
   {
     question: 'How do I use this application?',
-    answer: `You can use this application by searching movies (using their full name) and adding them to selected list. When you find a movie you want to add in selected list, just click on it and it will be automatically selected. After that, all you have to do is click on 'Random Movie' button. After that just wait for application to give you random movie from list that you created,`,
+    answer: `You can use this application by searching for movies (using their full name) and adding them to the selected list. When you find a movie you want to add to the selected list, just click on it and it will be automatically selected. After that, all you have to do is click on the 'Random Movie' button and wait for the application to give you a random movie from the list you created,`,
   },
   {
     question: 'Is Movie Twist only available for movies?',
     answer:
-      'No. With Movie Twist you can also search for short movies, anime series as well as anime movies. ',
+      'No. With Movie Twist, you can also search for tv series, short movies, anime series, as well as anime movies.',
   },
   {
     question: 'What is anime mode?',
-    answer: `Well, you need to try it out and see for yourself :). Maybe it will spawn emo girl or boy next to you if you turn this option on. Jokes aside, it's just a theme :),`,
+    answer: `Well, you need to try it out and see for yourself :). Maybe it will spawn an emo girl or boy next to you if you turn this option on. Jokes aside, it's just a theme :),`,
   },
   {
     question: 'Can I give contribution to Movie Twist?',
-    answer: `Yes! Any help is really appreciated. You can help me in two ways, first way is to help me with development and the second way is to help me in terms of donations. I would say to buy me a coffee only if you find this application useful ;). In either way, you can contact me on Discord at M0xei (m0xei) or you can buy me a coffee at <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a>. My main priority is to upgrade API so it can support more request per day, that cost from 1-25€ per month.`,
+    answer: `Yes! Any help is really appreciated. You can help me in two ways: first, by assisting with development, and second, through donations. I would say to buy me a coffee only if you find this application useful ;). In either case, you can contact me on Discord at M0xei (m0xei) or buy me a coffee at <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a>. My main priority is to upgrade the API so it can support more requests per day, which costs from 1-25€ per month.`,
   },
 ];
 
