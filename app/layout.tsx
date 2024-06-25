@@ -21,6 +21,9 @@ export default function RootLayout({
   return (
     <GlobalProvider>
       <html lang="en" className="bg-background text-textColor">
+        <head>
+          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        </head>
         <body className={inter.className}>
           <main>{children}</main>
           <Toaster
