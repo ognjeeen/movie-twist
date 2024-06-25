@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 type FAQItem = {
   question: string;
@@ -34,41 +34,8 @@ const faqData: FAQItem[] = [
 ];
 
 const FAQSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const debounce = (func: (...args: any[]) => void, wait: number) => {
-    let timeout: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  };
-
-  const handleScroll = useCallback(
-    debounce((event: React.WheelEvent<HTMLDivElement>) => {
-      if (event.deltaY > 0) {
-        setCurrentIndex((prevIndex) =>
-          Math.min(prevIndex + 1, faqData.length - 1)
-        );
-      } else {
-        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      }
-    }, 200), // 200ms debounce time
-    []
-  );
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        top: currentIndex * scrollRef.current.clientHeight,
-        behavior: 'smooth',
-      });
-    }
-  }, [currentIndex]);
-
   return (
-    <div className="h-full w-full md:flex" onWheel={handleScroll}>
+    <div className="h-full w-full md:flex flex-col md:flex-row">
       <div className="items-center pr-4 flex justify-center md:justify-end lg:w-3/6 md:pt-0">
         <div className="flex flex-col text-center text-primaryLight pt-4">
           <h1 className="text-4xl font-bold">FAQ</h1>
@@ -76,16 +43,11 @@ const FAQSection = () => {
           <Link href="/">&larr; Go back</Link>
         </div>
       </div>
-      <div
-        ref={scrollRef}
-        className="overflow-y-hidden h-full w-5/6 snap-y snap-mandatory m-auto"
-      >
+      <div className="overflow-y-auto h-full w-full md:w-5/6 snap-y snap-mandatory m-auto">
         {faqData.map((faq, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center justify-center h-screen snap-start transition-transform duration-500 ease-in-out ${
-              index === currentIndex ? 'opacity-100' : 'opacity-30'
-            }`}
+            className="flex flex-col items-center justify-center min-h-screen p-4 snap-start"
           >
             <h1 className="text-primaryLight text-3xl font-bold mb-4">
               {faq.question}
