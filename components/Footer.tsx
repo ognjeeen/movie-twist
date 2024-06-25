@@ -1,6 +1,7 @@
 'use client';
 
 import { useGlobalContext } from '@/context/GlobalContext';
+import Link from 'next/link';
 
 const Footer = () => {
   const { toggleAnimeMode } = useGlobalContext();
@@ -23,7 +24,9 @@ const Footer = () => {
             </span>
           </label>
         </div>
-        <div className="flex justify-center pt-2">FAQ</div>
+        <Link href="/faq" className="flex justify-center pt-2">
+          FAQ
+        </Link>
       </div>
     </div>
   );

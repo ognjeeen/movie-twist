@@ -16,6 +16,11 @@ const MovieInputSearch = () => {
       type="text"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      style={{
+        maxHeight: '60px',
+        MozOsxFontSmoothing: 'grayscale',
+        WebkitFontSmoothing: 'antialiased',
+      }}
     />
   );
 };
