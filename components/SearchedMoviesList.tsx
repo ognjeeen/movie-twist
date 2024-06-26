@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from 'react';
 import MovieSkeleton from './MovieSkeleton';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 type SearchedMoviesList = {
   imdbID: string;
@@ -10,30 +10,11 @@ type SearchedMoviesList = {
 
 type SearchedMoviesListProps = {
   movies: SearchedMoviesList[];
-  selectedId: string | null;
-  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-const SearchedMoviesList = ({
-  movies,
-  selectedId,
-  setSelectedId,
-}: SearchedMoviesListProps) => {
+const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
+  const { handleSelectMovie } = useGlobalContext();
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  const [clickedIds, setClickedIds] = useState<string[]>([]);
-
-  const handleSelectMovie = (id: string) => {
-    if (id === selectedId) {
-      toast.error('Movie is already in the list');
-    } else {
-      if (!clickedIds.includes(id)) {
-        setClickedIds((prevClickedIds) => [...prevClickedIds, id]);
-        setSelectedId(id);
-      } else {
-        toast.error('Movie is already in the list');
-      }
-    }
-  };
 
   // Movies without a poster are not included in a search list
   const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
@@ -44,7 +25,7 @@ const SearchedMoviesList = ({
         {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
-            className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer"
+            className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer focus:outline-none active:animate-click"
           >
             <div
               className={`${

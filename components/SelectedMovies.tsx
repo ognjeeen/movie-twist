@@ -1,9 +1,8 @@
-'use client';
-import { useGlobalContext } from '@/context/GlobalContext';
 import { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
 import toast from 'react-hot-toast';
 import useWindowSize from 'react-use/lib/useWindowSize';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 type MovieObject = {
   imdbID: string;
@@ -12,34 +11,32 @@ type MovieObject = {
 };
 
 type SelectedMoviesProps = {
-  selectedId: string | null;
-  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
   movies: MovieObject[];
 };
 
-const SelectedMovies = ({
-  selectedId,
-  setSelectedId,
-  movies,
-}: SelectedMoviesProps) => {
+const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   const [pickedMovie, setPickedMovie] = useState<MovieObject | null>(null);
   const [selectedMovies, setSelectedMovies] = useState<MovieObject[]>([]);
-  const [clickedIds, setClickedIds] = useState<string[]>([]);
   const [isRandomMovieAnimationActive, setRandomMovieAnimationActive] =
     useState(false);
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
   const [numberOfPieces, setNumberOfPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
-  const { setQuery, animeMode } = useGlobalContext();
+  const {
+    setQuery,
+    selectedId,
+    setSelectedId,
+    clickedIds,
+    setClickedIds,
+    animeMode,
+  } = useGlobalContext();
   const { width, height } = useWindowSize();
   const buttonColor = animeMode
     ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover'
     : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover';
 
   useEffect(() => {
-    if (selectedId && clickedIds.includes(selectedId)) {
-      toast.error('Movie is already in the list');
-    } else if (selectedId) {
+    if (selectedId) {
       const movieFilter = movies.find((movie) => movie.imdbID === selectedId);
 
       if (movieFilter) {
@@ -53,11 +50,14 @@ const SelectedMovies = ({
             movieFilter,
           ]);
         }
-
-        setClickedIds((prevClickedIds) => [...prevClickedIds, selectedId]);
       }
     }
-  }, [selectedId]);
+  }, [selectedId, movies, selectedMovies]);
+
+  useEffect(() => {
+    console.log('Clicked ids updated:', clickedIds);
+    console.log('Selected movies updated:', selectedMovies);
+  }, [clickedIds, selectedMovies]);
 
   const handleDeleteAll = () => {
     toast((t) => (
@@ -90,6 +90,18 @@ const SelectedMovies = ({
         </div>
       </div>
     ));
+  };
+
+  const handleDeleteSelectedMovie = (id: string) => {
+    setSelectedMovies((prevSelectedMovies) =>
+      prevSelectedMovies.filter((movie) => movie.imdbID !== id)
+    );
+
+    setClickedIds((prevClickedIds) =>
+      prevClickedIds.filter((clickedId) => clickedId !== id)
+    );
+
+    setSelectedId(null);
   };
 
   const handlePickRandomMovie = () => {
@@ -127,9 +139,10 @@ const SelectedMovies = ({
             <li key={movie.imdbID} className="p-4">
               <div>
                 <img
-                  className="w-28 h-44 object-cover"
+                  className="w-28 h-44 object-cover hover:cursor-pointer"
                   alt={movie.Title}
                   src={movie.Poster}
+                  onClick={() => handleDeleteSelectedMovie(movie.imdbID)}
                 />
               </div>
             </li>

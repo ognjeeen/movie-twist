@@ -19,9 +19,9 @@ const SearchedMovies = () => {
   const [movies, setMovies] = useState<MovieObject[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { query } = useGlobalContext();
+
   useEffect(() => {
     if (controllerRef.current) {
       controllerRef.current.abort();
@@ -82,11 +82,7 @@ const SearchedMovies = () => {
         )}
         {!loading && !error && (
           <div className="absolute inset-0">
-            <SearchedMoviesList
-              movies={movies}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-            />
+            <SearchedMoviesList movies={movies} />
           </div>
         )}
         {error && (
@@ -96,11 +92,7 @@ const SearchedMovies = () => {
         )}
       </div>
 
-      <SelectedMovies
-        selectedId={selectedId}
-        setSelectedId={setSelectedId}
-        movies={movies}
-      />
+      <SelectedMovies movies={movies} />
     </>
   );
 };

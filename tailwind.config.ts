@@ -24,6 +24,15 @@ const config: Config = {
       fontFamily: {
         Bungee: ['Bungee'],
       },
+      keyframes: {
+        click: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.95)' },
+        },
+      },
+      animation: {
+        click: 'click 0.2s ease-out',
+      },
     },
   },
 };
