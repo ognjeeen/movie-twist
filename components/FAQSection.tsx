@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
 
 type FAQItem = {
   question: string;
@@ -35,24 +34,24 @@ const faqData: FAQItem[] = [
 
 const FAQSection = () => {
   return (
-    <div className="h-full w-full md:flex flex-col md:flex-row">
-      <div className="items-center pr-4 flex justify-center md:justify-end lg:w-3/6 md:pt-0">
-        <div className="flex flex-col text-center text-primaryLight pt-4">
+    <div className="h-full w-full flex-col md:flex md:flex-row">
+      <div className="items-center pr-4 flex justify-center lg:w-3/6 md:justify-end md:pr-0">
+        <div className="flex flex-col text-center text-primaryLight pt-4 mb-10">
           <h1 className="text-4xl font-bold">FAQ</h1>
           <span>Scroll to see all FAQ</span>
           <Link href="/">&larr; Go back</Link>
         </div>
       </div>
-      <div className="overflow-y-auto h-full w-full md:w-5/6 snap-y snap-mandatory m-auto">
+      <div className="h-full w-full m-auto snap-y md:overflow-y-auto md:snap-mandatory md:w-5/6">
         {faqData.map((faq, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center min-h-screen p-4 snap-start"
+            className="flex flex-col items-center justify-center p-4 mb-10 md:min-h-screen md:snap-start"
           >
-            <h1 className="text-primaryLight text-3xl font-bold mb-4">
+            <h1 className="text-primaryLight text-lg font-bold mb-2 text-center md:text-2xl">
               {faq.question}
             </h1>
-            <p className="text-lg md:w-2/3 break-words text-justify">
+            <p className="text-base text-justify sm:text-center md:text-lg sm:w-2/3 md:w-3/4 lg:w-4/6">
               <span dangerouslySetInnerHTML={{ __html: faq.answer }} />
             </p>
           </div>
