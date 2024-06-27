@@ -51,7 +51,7 @@ const MovieCardInfo = ({
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
       <div className="2xl:w-1/3 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative mx-4">
         <div>
-          <h1 className="text-primaryLight text-center md:pb-10 pb-6 text-5xl font-Bungee">
+          <h1 className="text-primaryLight text-center md:pb-10 pb-6 md:text-5xl text-3xl font-Bungee">
             {movieInfo.Title}
           </h1>
         </div>
@@ -92,7 +92,7 @@ const MovieCardInfo = ({
                 {modifiedRatings.map((rating, i) => (
                   <div key={i}>
                     <p className="text-lg font-bold">{rating.Source}</p>
-                    <p className="font-Bungee text-xl text-primaryLight">
+                    <p className="font-Bungee md:text-xl text-base text-primaryLight">
                       {rating.Value}
                     </p>
                   </div>
@@ -104,7 +104,7 @@ const MovieCardInfo = ({
 
         {/* Movie plot */}
         <div className="p-2 md:p-4">
-          <div className="lg:overflow-hidden md:h-auto overflow-auto h-40 p-2 text-justify bg-background rounded-xl">
+          <div className="lg:overflow-hidden md:h-auto md:overflow-hidden overflow-scroll h-40 p-2 text-justify bg-background rounded-xl">
             <span>{movieInfo.Plot}</span>
           </div>
         </div>
