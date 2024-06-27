@@ -54,11 +54,6 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
     }
   }, [selectedId, movies, selectedMovies]);
 
-  useEffect(() => {
-    console.log('Clicked ids updated:', clickedIds);
-    console.log('Selected movies updated:', selectedMovies);
-  }, [clickedIds, selectedMovies]);
-
   const handleDeleteAll = () => {
     toast((t) => (
       <div className="text-base lg:text-lg">
