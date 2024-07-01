@@ -1,8 +1,13 @@
 'use client';
 import { useGlobalContext } from '@/context/GlobalContext';
+import { useEffect } from 'react';
 
 const MovieInputSearch = () => {
   const { query, setQuery, animeMode } = useGlobalContext();
+
+  useEffect(() => {
+    setQuery('');
+  }, []);
 
   const inputStyle = animeMode ? 'bg-animeBluePrimary' : 'bg-primary';
   const placeholder = animeMode
@@ -16,6 +21,7 @@ const MovieInputSearch = () => {
       type="text"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      autoComplete="off"
       style={{
         maxHeight: '60px',
         MozOsxFontSmoothing: 'grayscale',
