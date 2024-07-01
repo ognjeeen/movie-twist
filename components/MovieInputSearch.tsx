@@ -22,6 +22,7 @@ const MovieInputSearch = () => {
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       autoComplete="off"
+      maxLength={20}
       style={{
         maxHeight: '60px',
         MozOsxFontSmoothing: 'grayscale',
