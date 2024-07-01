@@ -59,7 +59,7 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
 
   return (
     <div className="overflow-x-auto">
-      <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 justify-start lg:justify-start xl:justify-center gap-2">
+      <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 gap-2 justify-start md:justify-start 2xl:justify-center">
         {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
