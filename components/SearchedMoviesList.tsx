@@ -117,7 +117,6 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
         <MovieCardInfo
           movieInfo={movieInfo}
           setSelectedInfoId={setSelectedInfoId}
-          isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
       )}

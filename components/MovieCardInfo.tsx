@@ -1,3 +1,8 @@
+import IMDbLogo from '@/public/IMDbLogo.png';
+import MetacriticLogo from '@/public/MetacriticLogo.png';
+import RottenTomatoesLogo from '@/public/RottenTomatoesLogo.png';
+import Image, { StaticImageData } from 'next/image';
+
 type Rating = {
   Source: string;
   Value: string;
@@ -21,26 +26,21 @@ type MovieInformation = {
 type MovieCardInfo = {
   movieInfo: MovieInformation;
   setSelectedInfoId: React.Dispatch<React.SetStateAction<string | null>>;
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MovieCardInfo = ({
   movieInfo,
   setSelectedInfoId,
-  isOpen,
   setIsOpen,
 }: MovieCardInfo) => {
-  const modifiedRatings = movieInfo.Ratings.map((rating) => {
-    if (rating.Source === 'Internet Movie Database') {
-      return {
-        ...rating,
-        Source: 'IMDb',
-      };
-    } else {
-      return rating;
-    }
-  });
+  const sourceToLogo: { [key: string]: StaticImageData } = {
+    'Internet Movie Database': IMDbLogo,
+    'Rotten Tomatoes': RottenTomatoesLogo,
+    Metacritic: MetacriticLogo,
+  };
+
+  const movieGenre = movieInfo.Genre.split(',').slice(0, 2);
 
   const handleCloseMovieInfo = () => {
     setSelectedInfoId(null);
@@ -49,50 +49,75 @@ const MovieCardInfo = ({
 
   return (
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
-      <div className="2xl:w-1/3 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative mx-4">
-        <div>
-          <h1 className="text-primaryLight text-center md:pb-10 pb-6 md:text-5xl text-3xl font-Bungee">
+      <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative">
+        {/* Title, released date, runtime */}
+        <div className="md:pb-2 pb-2">
+          <h1 className="text-primaryLight text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4">
             {movieInfo.Title}
           </h1>
+          <div className="text-center justify-center flex gap-4 text-lg">
+            <span>{movieInfo.Released}</span>
+            <span>&#x2022;</span>
+            <span>{movieInfo.Runtime}</span>
+          </div>
         </div>
 
         {/* Picture, director, actors, ratings */}
-        <div className="flex flex-row p-2">
-          <div className="w-1/3 justify-center items-center md:flex hidden">
+        <div className="md:flex md:flex-row p-4">
+          {/* Image, genre */}
+          <div className="m-auto flex flex-col md:w-1/3 justify-center items-center">
             <img
-              className="w-40 h-68 object-cover rounded-md"
+              className="w-40 h-60 object-cover rounded-md hidden md:flex"
               alt={movieInfo.Title}
               src={movieInfo.Poster}
             />
+            <div className="flex flex-row mt-2 mb-2 gap-2">
+              {movieGenre.map((genre, i) => (
+                <span key={i} className="bg-background rounded-2xl text-sm p-2">
+                  {genre}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <div className="text-center justify-center flex gap-4 text-lg">
-              <span>{movieInfo.Released}</span>
-              <span>&#x2022;</span>
-              <span>{movieInfo.Runtime}</span>
-            </div>
-            <div className="mt-6 mb-6 text-center justify-center items-center m-auto w-full">
+          {/* Actors, directors, boxOffice */}
+          <div className="flex flex-col md:w-3/4">
+            <div className="bg-background rounded-xl p-2">
               <div>
+                <p className="text-xl font-bold">Actors</p>
+                <span className="font-Bungee text-primaryLight">
+                  {movieInfo.Actors}
+                </span>
+              </div>
+              <div className="mt-4">
                 <p className="text-xl font-bold">Director</p>
                 <span className="font-Bungee text-primaryLight">
                   {movieInfo.Director}
                 </span>
               </div>
               <div className="mt-4">
-                <p className="text-xl font-bold">Actors</p>
+                <p className="text-xl font-bold">BoxOffice</p>
                 <span className="font-Bungee text-primaryLight">
-                  {movieInfo.Actors}
+                  {movieInfo.BoxOffice}
                 </span>
               </div>
             </div>
 
-            <div className="p-2">
-              <div className="flex gap-6 text-center justify-center">
-                {modifiedRatings.map((rating, i) => (
-                  <div key={i}>
-                    <p className="text-lg font-bold">{rating.Source}</p>
-                    <p className="font-Bungee md:text-xl text-base text-primaryLight">
+            {/* Rating logos */}
+            <div className="p-2 bg-background mt-2 rounded-lg">
+              <div className="flex gap-12 text-center justify-center">
+                {movieInfo.Ratings.map((rating, i) => (
+                  <div key={i} className="justify-center flex flex-col">
+                    {sourceToLogo[rating.Source] ? (
+                      <Image
+                        src={sourceToLogo[rating.Source]}
+                        alt={rating.Source}
+                        className="w-10 h-auto mx-auto mb-1"
+                      />
+                    ) : (
+                      <p className="text-lg font-bold">{rating.Source}</p>
+                    )}
+                    <p className="font-Bungee text-primaryLight">
                       {rating.Value}
                     </p>
                   </div>
@@ -104,7 +129,7 @@ const MovieCardInfo = ({
 
         {/* Movie plot */}
         <div className="p-2 md:p-4">
-          <div className="lg:overflow-hidden md:h-auto md:overflow-hidden overflow-scroll h-40 p-2 text-justify bg-background rounded-xl">
+          <div className="lg:overflow-hidden md:h-auto md:overflow-hidden overflow-scroll h-40 p-3 text-justify bg-background rounded-xl">
             <span>{movieInfo.Plot}</span>
           </div>
         </div>
