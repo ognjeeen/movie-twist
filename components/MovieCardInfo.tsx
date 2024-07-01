@@ -55,7 +55,7 @@ const MovieCardInfo = ({
           <h1 className="text-primaryLight text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4">
             {movieInfo.Title}
           </h1>
-          <div className="text-center justify-center flex gap-4 text-lg">
+          <div className="text-center justify-center flex gap-4 text-sm md:text-lg">
             <span>{movieInfo.Released}</span>
             <span>&#x2022;</span>
             <span>{movieInfo.Runtime}</span>
@@ -112,7 +112,7 @@ const MovieCardInfo = ({
                       <Image
                         src={sourceToLogo[rating.Source]}
                         alt={rating.Source}
-                        className="w-10 h-auto mx-auto mb-1"
+                        className="w-7 h-auto mx-auto mb-1 md:w-10"
                       />
                     ) : (
                       <p className="text-lg font-bold">{rating.Source}</p>
@@ -128,8 +128,8 @@ const MovieCardInfo = ({
         </div>
 
         {/* Movie plot */}
-        <div className="p-2 md:p-4">
-          <div className="lg:overflow-hidden md:h-auto md:overflow-hidden overflow-scroll h-40 p-3 text-justify bg-background rounded-xl">
+        <div className="p-4 md:p-4">
+          <div className="lg:overflow-hidden md:h-auto md:overflow-hidden md:text-base text-sm overflow-scroll h-20 p-3 text-justify bg-background rounded-xl">
             <span>{movieInfo.Plot}</span>
           </div>
         </div>
