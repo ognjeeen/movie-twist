@@ -2,6 +2,7 @@ import IMDbLogo from '@/public/IMDbLogo.png';
 import MetacriticLogo from '@/public/MetacriticLogo.png';
 import RottenTomatoesLogo from '@/public/RottenTomatoesLogo.png';
 import Image, { StaticImageData } from 'next/image';
+import Spinner from './Spinner';
 
 type Rating = {
   Source: string;
@@ -17,14 +18,13 @@ type MovieInformation = {
   Director: string;
   Actors: string;
   Plot: string;
-  Awards: string;
   Poster: string;
   Ratings: Rating[];
   BoxOffice: string;
 };
 
 type MovieCardInfo = {
-  movieInfo: MovieInformation;
+  movieInfo: MovieInformation | null;
   setSelectedInfoId: React.Dispatch<React.SetStateAction<string | null>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -40,7 +40,7 @@ const MovieCardInfo = ({
     Metacritic: MetacriticLogo,
   };
 
-  const movieGenre = movieInfo.Genre.split(',').slice(0, 2);
+  const movieGenre = movieInfo?.Genre.split(',').slice(0, 2);
 
   const handleCloseMovieInfo = () => {
     setSelectedInfoId(null);
@@ -53,12 +53,12 @@ const MovieCardInfo = ({
         {/* Title, released date, runtime */}
         <div className="md:pb-2 pb-2">
           <h1 className="text-primaryLight text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4">
-            {movieInfo.Title}
+            {movieInfo?.Title}
           </h1>
           <div className="text-center justify-center flex gap-4 text-sm md:text-lg">
-            <span>{movieInfo.Released}</span>
+            <span>{movieInfo?.Released}</span>
             <span>&#x2022;</span>
-            <span>{movieInfo.Runtime}</span>
+            <span>{movieInfo?.Runtime}</span>
           </div>
         </div>
 
@@ -68,11 +68,11 @@ const MovieCardInfo = ({
           <div className="m-auto flex flex-col md:w-1/3 justify-center items-center">
             <img
               className="w-40 h-60 object-cover rounded-md hidden md:flex"
-              alt={movieInfo.Title}
-              src={movieInfo.Poster}
+              alt={movieInfo?.Title}
+              src={movieInfo?.Poster}
             />
             <div className="flex flex-row mt-2 mb-2 gap-2">
-              {movieGenre.map((genre, i) => (
+              {movieGenre?.map((genre, i) => (
                 <span key={i} className="bg-background rounded-2xl text-sm p-2">
                   {genre}
                 </span>
@@ -86,19 +86,19 @@ const MovieCardInfo = ({
               <div>
                 <p className="text-xl font-bold">Actors</p>
                 <span className="font-Bungee text-primaryLight">
-                  {movieInfo.Actors}
+                  {movieInfo?.Actors}
                 </span>
               </div>
               <div className="mt-4">
                 <p className="text-xl font-bold">Director</p>
                 <span className="font-Bungee text-primaryLight">
-                  {movieInfo.Director}
+                  {movieInfo?.Director}
                 </span>
               </div>
               <div className="mt-4">
                 <p className="text-xl font-bold">BoxOffice</p>
                 <span className="font-Bungee text-primaryLight">
-                  {movieInfo.BoxOffice}
+                  {movieInfo?.BoxOffice}
                 </span>
               </div>
             </div>
@@ -106,7 +106,7 @@ const MovieCardInfo = ({
             {/* Rating logos */}
             <div className="p-2 bg-background mt-2 rounded-lg">
               <div className="flex gap-12 text-center justify-center">
-                {movieInfo.Ratings.map((rating, i) => (
+                {movieInfo?.Ratings.map((rating, i) => (
                   <div key={i} className="justify-center flex flex-col">
                     {sourceToLogo[rating.Source] ? (
                       <Image
@@ -130,7 +130,7 @@ const MovieCardInfo = ({
         {/* Movie plot */}
         <div className="p-4 md:p-4">
           <div className="lg:overflow-hidden md:h-auto md:overflow-hidden md:text-base text-sm overflow-scroll h-20 p-3 text-justify bg-background rounded-xl">
-            <span>{movieInfo.Plot}</span>
+            <span>{movieInfo?.Plot}</span>
           </div>
         </div>
 

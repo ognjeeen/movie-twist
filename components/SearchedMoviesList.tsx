@@ -3,6 +3,7 @@ import MovieSkeleton from './MovieSkeleton';
 import { useGlobalContext } from '@/context/GlobalContext';
 import axios from 'axios';
 import MovieCardInfo from './MovieCardInfo';
+import Spinner from './Spinner';
 
 type SearchedMoviesList = {
   imdbID: string;
@@ -39,6 +40,7 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
 
         setMovieInfo(data);
         setIsOpen(true);
+        setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
         } else if (error instanceof Error) {
@@ -46,8 +48,6 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
         } else {
           // setError('An unknown error occurred');
         }
-      } finally {
-        setLoading(false);
       }
     }
 
@@ -113,7 +113,14 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
           </li>
         ))}
       </ul>
-      {movieInfo && isOpen && (
+      {loading && (
+        <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
+          <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative">
+            <Spinner loading={loading} />
+          </div>
+        </div>
+      )}
+      {!loading && isOpen && (
         <MovieCardInfo
           movieInfo={movieInfo}
           setSelectedInfoId={setSelectedInfoId}

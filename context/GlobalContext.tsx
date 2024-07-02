@@ -29,15 +29,17 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
 
   const handleSelectMovie = (id: string) => {
     if (clickedIds.includes(id)) {
-      toast.error('Movie is already in the list');
+      toast.error(`${animeMode ? 'Anime' : 'Movie'} is already in the list`);
     } else {
       setClickedIds((prevClickedIds) => [...prevClickedIds, id]);
       setSelectedId(id);
+      setQuery('');
     }
   };
 
   function toggleAnimeMode() {
     setAnimeMode(!animeMode);
+    setQuery('');
   }
 
   return (

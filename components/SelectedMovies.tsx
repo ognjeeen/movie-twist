@@ -22,14 +22,8 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
   const [numberOfPieces, setNumberOfPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    setQuery,
-    selectedId,
-    setSelectedId,
-    clickedIds,
-    setClickedIds,
-    animeMode,
-  } = useGlobalContext();
+  const { setQuery, selectedId, setSelectedId, setClickedIds, animeMode } =
+    useGlobalContext();
   const { width, height } = useWindowSize();
   const buttonColor = animeMode
     ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover'
