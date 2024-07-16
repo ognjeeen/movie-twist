@@ -38,7 +38,7 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   };
 
   function toggleAnimeMode() {
-    setAnimeMode(!animeMode);
+    setAnimeMode((prev) => !prev);
     setQuery('');
   }
 

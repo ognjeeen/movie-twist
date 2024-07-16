@@ -1,6 +1,8 @@
 'use client';
 
+import { useGlobalContext } from '@/context/GlobalContext';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 type FAQItem = {
   question: string;
@@ -33,6 +35,12 @@ const faqData: FAQItem[] = [
 ];
 
 const FAQSection = () => {
+  const { setAnimeMode } = useGlobalContext();
+
+  useEffect(() => {
+    setAnimeMode(false);
+  }, []);
+
   return (
     <div className="h-full w-full flex-col md:flex md:flex-row">
       <div className="items-center pr-4 flex justify-center lg:w-3/6 md:justify-end md:pr-0">
