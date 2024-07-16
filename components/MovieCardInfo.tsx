@@ -2,7 +2,6 @@ import IMDbLogo from '@/public/IMDbLogo.png';
 import MetacriticLogo from '@/public/MetacriticLogo.png';
 import RottenTomatoesLogo from '@/public/RottenTomatoesLogo.png';
 import Image, { StaticImageData } from 'next/image';
-import Spinner from './Spinner';
 
 type Rating = {
   Source: string;
@@ -47,6 +46,8 @@ const MovieCardInfo = ({
     setIsOpen(false);
   };
 
+  console.log(movieInfo);
+
   return (
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
       <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative">
@@ -63,7 +64,7 @@ const MovieCardInfo = ({
         </div>
 
         {/* Picture, director, actors, ratings */}
-        <div className="md:flex md:flex-row p-4">
+        <div className="md:flex md:flex-row px-4">
           {/* Image, genre */}
           <div className="m-auto flex flex-col md:w-1/3 justify-center items-center">
             <img
@@ -98,7 +99,7 @@ const MovieCardInfo = ({
               <div className="mt-4">
                 <p className="text-xl font-bold">BoxOffice</p>
                 <span className="font-Bungee text-primaryLight">
-                  {movieInfo?.BoxOffice}
+                  {!movieInfo?.BoxOffice ? 'N/A' : movieInfo?.BoxOffice}
                 </span>
               </div>
             </div>
@@ -106,22 +107,26 @@ const MovieCardInfo = ({
             {/* Rating logos */}
             <div className="p-2 bg-background mt-2 rounded-lg">
               <div className="flex gap-12 text-center justify-center">
-                {movieInfo?.Ratings.map((rating, i) => (
-                  <div key={i} className="justify-center flex flex-col">
-                    {sourceToLogo[rating.Source] ? (
-                      <Image
-                        src={sourceToLogo[rating.Source]}
-                        alt={rating.Source}
-                        className="w-7 h-auto mx-auto mb-1 md:w-10"
-                      />
-                    ) : (
-                      <p className="text-lg font-bold">{rating.Source}</p>
-                    )}
-                    <p className="font-Bungee text-primaryLight">
-                      {rating.Value}
-                    </p>
-                  </div>
-                ))}
+                {movieInfo?.Ratings.length === 0 ? (
+                  <p className="font-Bungee">No ratings found</p>
+                ) : (
+                  movieInfo?.Ratings.map((rating, i) => (
+                    <div key={i} className="justify-center flex flex-col">
+                      {sourceToLogo[rating.Source] ? (
+                        <Image
+                          src={sourceToLogo[rating.Source]}
+                          alt={rating.Source}
+                          className="w-7 h-auto mx-auto mb-1 md:w-10"
+                        />
+                      ) : (
+                        <p className="text-lg font-bold">{rating.Source}</p>
+                      )}
+                      <p className="font-Bungee text-primaryLight">
+                        {rating.Value}
+                      </p>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>

@@ -90,8 +90,8 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
                 className="absolute top-4 right-4 bg-background text-sm text-white p-1 rounded-lg uppercase font-bold group"
                 onClick={() => setSelectedInfoId(movie.imdbID)}
               >
-                <span className="hidden group-hover:block text-xs text-white">
-                  Click for movie details
+                <span className="hidden group-hover:block text-xs text-white p-2">
+                  Movie details
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
