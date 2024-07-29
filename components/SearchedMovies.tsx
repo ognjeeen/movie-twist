@@ -59,7 +59,7 @@ const SearchedMovies = () => {
 
     if (query.length < 2) {
       setMovies([]);
-      setError('Start typing to search a movie');
+      setError('Type to search for any movie, tv show, anime');
       setLoading(false);
       return;
     }
