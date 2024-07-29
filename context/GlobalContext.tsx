@@ -1,3 +1,9 @@
+/* 
+'clickedMovieIdsList' - state stores the IDs of all movies that the user has clicked. It represents an array of selected movies from which random movies are selected,
+
+'clickedMovieId' - state stores the ID of the movie clicked at the moment. clickedMovieId is added to the 'clickedMovieIdsList' and is also used to display the movie details card when the 'MORE DETAILS' button is clicked,
+*/
+
 'use client';
 import { createContext, useContext, useState, ReactNode } from 'react';
 import toast from 'react-hot-toast';
@@ -5,11 +11,15 @@ import toast from 'react-hot-toast';
 interface GlobalContextProps {
   query: string;
   setQuery: (query: string) => void;
-  clickedIds: string[];
-  setClickedIds: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedId: string | null;
-  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
+
+  clickedMovieIdsList: string[];
+  setClickedMovieIdsList: React.Dispatch<React.SetStateAction<string[]>>;
+
+  clickedMovieId: string | null;
+  setClickedMovieId: React.Dispatch<React.SetStateAction<string | null>>;
+
   handleSelectMovie: (id: string) => void;
+
   animeMode: boolean;
   setAnimeMode: (animeMode: boolean) => void;
   toggleAnimeMode: () => void;
@@ -23,16 +33,16 @@ interface GlobalProviderProps {
 
 export function GlobalProvider({ children }: GlobalProviderProps) {
   const [query, setQuery] = useState<string>('');
-  const [clickedIds, setClickedIds] = useState<string[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [clickedMovieIdsList, setClickedMovieIdsList] = useState<string[]>([]);
+  const [clickedMovieId, setClickedMovieId] = useState<string | null>(null);
   const [animeMode, setAnimeMode] = useState<boolean>(false);
 
   const handleSelectMovie = (id: string) => {
-    if (clickedIds.includes(id)) {
+    if (clickedMovieIdsList.includes(id)) {
       toast.error(`${animeMode ? 'Anime' : 'Movie'} is already in the list`);
     } else {
-      setClickedIds((prevClickedIds) => [...prevClickedIds, id]);
-      setSelectedId(id);
+      setClickedMovieIdsList((prevClickedIds) => [...prevClickedIds, id]);
+      setClickedMovieId(id);
       setQuery('');
     }
   };
@@ -47,10 +57,10 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
       value={{
         query,
         setQuery,
-        clickedIds,
-        setClickedIds,
-        selectedId,
-        setSelectedId,
+        clickedMovieIdsList,
+        setClickedMovieIdsList,
+        clickedMovieId,
+        setClickedMovieId,
         handleSelectMovie,
         animeMode,
         setAnimeMode,

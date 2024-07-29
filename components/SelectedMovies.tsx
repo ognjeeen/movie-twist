@@ -15,38 +15,49 @@ type SelectedMoviesProps = {
 };
 
 const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
-  const [pickedMovie, setPickedMovie] = useState<MovieObject | null>(null);
-  const [selectedMovies, setSelectedMovies] = useState<MovieObject[]>([]);
+  const [randomPickedMovie, setRandomPickedMovie] =
+    useState<MovieObject | null>(null);
+  const [userSelectedMoviesList, setUserSelectedMoviesList] = useState<
+    MovieObject[]
+  >([]);
   const [isRandomMovieAnimationActive, setRandomMovieAnimationActive] =
     useState(false);
   const [isButtonAnimationActive, setIsButtonAnimationActive] = useState(false);
-  const [numberOfPieces, setNumberOfPieces] = useState(200);
+  const [numberOfConfettiPieces, setNumberOfConfettiPieces] = useState(200);
   const [isOpen, setIsOpen] = useState(false);
-  const { setQuery, selectedId, setSelectedId, setClickedIds, animeMode } =
-    useGlobalContext();
+  const {
+    setQuery,
+    clickedMovieId,
+    setClickedMovieId,
+    setClickedMovieIdsList,
+    animeMode,
+  } = useGlobalContext();
   const { width, height } = useWindowSize();
   const buttonColor = animeMode
     ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover'
     : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover';
 
+  // useEffect checks if the 'clickedMovieId' is valid. If it is, it iterates through movies list to find a movie with the same ID as 'clickedMovieId'. If a match is found, the movie is added to the `userSelectedMoviesList`
   useEffect(() => {
-    if (selectedId) {
-      const movieFilter = movies.find((movie) => movie.imdbID === selectedId);
+    if (clickedMovieId) {
+      const isMovieFound = movies.find(
+        (movie) => movie.imdbID === clickedMovieId
+      );
 
-      if (movieFilter) {
-        const alreadySelected = selectedMovies.some(
-          (movie) => movie.imdbID === movieFilter.imdbID
+      if (isMovieFound) {
+        const alreadySelected = userSelectedMoviesList.some(
+          (movie) => movie.imdbID === isMovieFound.imdbID
         );
 
         if (!alreadySelected) {
-          setSelectedMovies((prevSelectedMovies) => [
+          setUserSelectedMoviesList((prevSelectedMovies) => [
             ...prevSelectedMovies,
-            movieFilter,
+            isMovieFound,
           ]);
         }
       }
     }
-  }, [selectedId, movies, selectedMovies]);
+  }, [clickedMovieId, movies, userSelectedMoviesList]);
 
   const handleDeleteAll = () => {
     toast((t) => (
@@ -58,9 +69,9 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
         <div className="flex gap-4 mt-2">
           <button
             onClick={() => {
-              setSelectedMovies([]);
-              setSelectedId(null);
-              setClickedIds([]);
+              setUserSelectedMoviesList([]);
+              setClickedMovieId(null);
+              setClickedMovieIdsList([]);
               setQuery('');
               toast.dismiss(t.id);
             }}
@@ -82,15 +93,15 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   };
 
   const handleDeleteSelectedMovie = (id: string) => {
-    setSelectedMovies((prevSelectedMovies) =>
+    setUserSelectedMoviesList((prevSelectedMovies) =>
       prevSelectedMovies.filter((movie) => movie.imdbID !== id)
     );
 
-    setClickedIds((prevClickedIds) =>
+    setClickedMovieIdsList((prevClickedIds) =>
       prevClickedIds.filter((clickedId) => clickedId !== id)
     );
 
-    setSelectedId(null);
+    setClickedMovieId(null);
   };
 
   const handlePickRandomMovie = () => {
@@ -98,14 +109,16 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
     setRandomMovieAnimationActive(true);
 
     setTimeout(() => {
-      const randomNumber = Math.floor(Math.random() * selectedMovies.length);
-      setPickedMovie(selectedMovies[randomNumber]);
+      const randomNumber = Math.floor(
+        Math.random() * userSelectedMoviesList.length
+      );
+      setRandomPickedMovie(userSelectedMoviesList[randomNumber]);
       setRandomMovieAnimationActive(false);
       setIsOpen(true);
 
-      setNumberOfPieces(200);
+      setNumberOfConfettiPieces(200);
       setTimeout(() => {
-        setNumberOfPieces(0);
+        setNumberOfConfettiPieces(0);
       }, 2000);
     }, 2000);
 
@@ -114,17 +127,18 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
     }, 500);
   };
 
-  if (selectedMovies.length === 0) return null;
+  if (userSelectedMoviesList.length === 0) return null;
 
   return (
     <>
       <div className="bg-backgroundLight w-3/5 mt-10 rounded-lg m-auto mb-10 relative drop-shadow-lg pt-6">
+        {/* Displaying list of selected (added) movies by user */}
         <ul
           className={`flex flex-wrap justify-center ${
             isRandomMovieAnimationActive ? 'animate-merge' : ''
           }`}
         >
-          {selectedMovies.map((movie) => (
+          {userSelectedMoviesList.map((movie) => (
             <li key={movie.imdbID} className="p-4">
               <div>
                 <img
@@ -138,6 +152,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
           ))}
         </ul>
 
+        {/* Clear All and Random Movie buttons */}
         <div className="flex flex-col gap-2 justify-center pb-4 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base font-Bungee text-textColor mt-10">
           <button
             onClick={handleDeleteAll}
@@ -159,12 +174,13 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
         </div>
       </div>
 
-      {pickedMovie && isOpen && (
+      {/* Card for displaying what application picked as a random movie */}
+      {randomPickedMovie && isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10">
           <Confetti
             width={width}
             height={height}
-            numberOfPieces={numberOfPieces}
+            numberOfPieces={numberOfConfettiPieces}
           />
           <div className="pt-10 bg-backgroundLight rounded-lg relative max-w-lg w-full mx-4">
             <h1
@@ -172,15 +188,15 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 animeMode ? 'text-animeBlueLight' : 'text-primaryLight'
               } text-center pb-10 text-5xl font-Bungee`}
             >
-              Go Watch
+              go watch
             </h1>
             <img
               className="w-48 h-72 object-cover mx-auto"
-              alt={pickedMovie.Title}
-              src={pickedMovie.Poster}
+              alt={randomPickedMovie.Title}
+              src={randomPickedMovie.Poster}
             />
             <h2 className="text-xl mb-4 text-center mt-2 pb-6">
-              {pickedMovie.Title}
+              {randomPickedMovie.Title}
             </h2>
             <button
               onClick={() => setIsOpen(false)}

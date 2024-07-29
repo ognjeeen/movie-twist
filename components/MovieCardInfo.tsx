@@ -24,13 +24,15 @@ type MovieInformation = {
 
 type MovieCardInfo = {
   movieInfo: MovieInformation | null;
-  setSelectedInfoId: React.Dispatch<React.SetStateAction<string | null>>;
+  setSelectedMovieDetailsId: React.Dispatch<
+    React.SetStateAction<string | null>
+  >;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MovieCardInfo = ({
   movieInfo,
-  setSelectedInfoId,
+  setSelectedMovieDetailsId,
   setIsOpen,
 }: MovieCardInfo) => {
   const sourceToLogo: { [key: string]: StaticImageData } = {
@@ -39,14 +41,13 @@ const MovieCardInfo = ({
     Metacritic: MetacriticLogo,
   };
 
+  //Extracting the first two genres from the array of movie genres
   const movieGenre = movieInfo?.Genre.split(',').slice(0, 2);
 
   const handleCloseMovieInfo = () => {
-    setSelectedInfoId(null);
+    setSelectedMovieDetailsId(null);
     setIsOpen(false);
   };
-
-  console.log(movieInfo);
 
   return (
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
@@ -63,9 +64,9 @@ const MovieCardInfo = ({
           </div>
         </div>
 
-        {/* Picture, director, actors, ratings */}
+        {/* Movie information section */}
         <div className="md:flex md:flex-row px-4">
-          {/* Image, genre */}
+          {/* Movie image, genre */}
           <div className="m-auto flex flex-col md:w-1/3 justify-center items-center">
             <img
               className="w-40 h-60 object-cover rounded-md hidden md:flex"
@@ -108,7 +109,7 @@ const MovieCardInfo = ({
             <div className="p-2 bg-background mt-2 rounded-lg">
               <div className="flex gap-12 text-center justify-center">
                 {movieInfo?.Ratings.length === 0 ? (
-                  <p className="font-Bungee">No ratings found</p>
+                  <p className="font-Bungee">no ratings found</p>
                 ) : (
                   movieInfo?.Ratings.map((rating, i) => (
                     <div key={i} className="justify-center flex flex-col">
@@ -139,7 +140,7 @@ const MovieCardInfo = ({
           </div>
         </div>
 
-        {/* Close button */}
+        {/* Close movie details section button */}
         <button
           onClick={handleCloseMovieInfo}
           className="absolute right-0 top-0 p-2"

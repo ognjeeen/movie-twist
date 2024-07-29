@@ -13,26 +13,30 @@ type SearchedMoviesList = {
 
 type SearchedMoviesListProps = {
   movies: SearchedMoviesList[];
+  setError: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
+const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
   const { handleSelectMovie } = useGlobalContext();
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [movieInfo, setMovieInfo] = useState(null);
-  const [selectedInfoId, setSelectedInfoId] = useState<string | null>(null);
+  const [selectedMovieDetailsId, setSelectedMovieDetailsId] = useState<
+    string | null
+  >(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Fetching more movie information when clicked on 'MORE DETAILS'
   useEffect(() => {
-    if (!selectedInfoId) return;
+    if (!selectedMovieDetailsId) return;
 
     async function fetchMoviesInfo() {
       setLoading(true);
-      // setError('');
+      setError('');
 
       try {
         const response = await axios.get(`/api/fetchMoviesInfo`, {
-          params: { selectedInfoId },
+          params: { selectedMovieDetailsId },
         });
 
         const data = response.data;
@@ -44,15 +48,15 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
       } catch (error) {
         if (axios.isCancel(error)) {
         } else if (error instanceof Error) {
-          // setError(error.message);
+          setError(error.message);
         } else {
-          // setError('An unknown error occurred');
+          setError('An unknown error occurred');
         }
       }
     }
 
     fetchMoviesInfo();
-  }, [selectedInfoId]);
+  }, [selectedMovieDetailsId]);
 
   // Movies without a poster are not included in a search list
   const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
@@ -60,6 +64,7 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
   return (
     <div className="overflow-x-auto">
       <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 gap-2 justify-start md:justify-start 2xl:justify-center">
+        {/* Displaying list of searched movies */}
         {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
@@ -86,12 +91,14 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
               >
                 {movie.Title}
               </h3>
+
+              {/* Button for more details about movie */}
               <button
                 className="absolute top-4 right-4 bg-background text-sm text-white p-1 rounded-lg uppercase font-bold group"
-                onClick={() => setSelectedInfoId(movie.imdbID)}
+                onClick={() => setSelectedMovieDetailsId(movie.imdbID)}
               >
                 <span className="hidden group-hover:block text-xs text-white p-2">
-                  Movie details
+                  more details
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +116,14 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
                 </svg>
               </button>
             </div>
+
+            {/* If movie image(poster) is still not loaded while searching show loading skeleton */}
             {!imageLoaded && <MovieSkeleton />}
           </li>
         ))}
       </ul>
+
+      {/* While loading searched movies show loading spinner */}
       {loading && (
         <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
           <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative">
@@ -120,10 +131,12 @@ const SearchedMoviesList = ({ movies }: SearchedMoviesListProps) => {
           </div>
         </div>
       )}
+
+      {/* Conditional rendering for showing movie card information when clicked on 'MORE DETAILS' */}
       {!loading && isOpen && (
         <MovieCardInfo
           movieInfo={movieInfo}
-          setSelectedInfoId={setSelectedInfoId}
+          setSelectedMovieDetailsId={setSelectedMovieDetailsId}
           setIsOpen={setIsOpen}
         />
       )}

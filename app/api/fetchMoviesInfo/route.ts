@@ -5,7 +5,7 @@ const KEY = process.env.API_KEY;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get('selectedInfoId');
+  const id = searchParams.get('selectedMovieDetailsId');
 
   if (!id) {
     return NextResponse.json(

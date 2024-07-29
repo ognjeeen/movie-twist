@@ -22,6 +22,7 @@ const SearchedMovies = () => {
 
   const { query } = useGlobalContext();
 
+  // useEffect for fetching searched movies from query + AbortController for race conditions
   useEffect(() => {
     if (controllerRef.current) {
       controllerRef.current.abort();
@@ -82,7 +83,7 @@ const SearchedMovies = () => {
         )}
         {!loading && !error && (
           <div className="absolute inset-0">
-            <SearchedMoviesList movies={movies} />
+            <SearchedMoviesList movies={movies} setError={setError} />
           </div>
         )}
         {error && (
