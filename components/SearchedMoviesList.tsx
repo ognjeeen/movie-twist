@@ -58,6 +58,17 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
     fetchMoviesInfo();
   }, [selectedMovieDetailsId]);
 
+  // Preventing page scrolling when a modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   // Movies without a poster are not included in a search list
   const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
 
