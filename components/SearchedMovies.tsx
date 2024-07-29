@@ -59,7 +59,9 @@ const SearchedMovies = () => {
 
     if (query.length < 2) {
       setMovies([]);
-      setError('Type to search for any movie, tv show, anime');
+      setError(
+        'Search for movies, TV shows, and anime to add to your random picker list'
+      );
       setLoading(false);
       return;
     }

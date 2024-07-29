@@ -24,7 +24,7 @@ const MovieInputSearch = () => {
         } else {
           setPlaceholderIndex(placeholderIndex + 1);
         }
-      }, 170);
+      }, 150);
 
       return () => {
         if (intervalRef.current) {

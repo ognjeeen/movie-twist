@@ -9,7 +9,7 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
 
   const animeErrorText = animeMode
     ? message.includes('movie')
-      ? 'start typing to search an anime'
+      ? 'Search for movies, TV shows, and anime to add to your random picker list'
       : 'anime not found'
     : message
     ? message === 'movie not found'
@@ -19,7 +19,9 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
 
   return (
     <div className="flex items-center justify-center font-Bungee">
-      <p className="justify-center text-center md:text-xl">{animeErrorText}</p>
+      <p className="justify-center text-center text-sm md:text-lg text-balance">
+        {animeErrorText}
+      </p>
     </div>
   );
 };
