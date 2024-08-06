@@ -51,7 +51,7 @@ const MovieCardInfo = ({
 
   return (
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
-      <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative">
+      <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative border border-primary">
         {/* Title, released date, runtime */}
         <div className="md:pb-2 pb-2">
           <h1 className="text-primaryLight text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4">
@@ -86,33 +86,33 @@ const MovieCardInfo = ({
           <div className="flex flex-col md:w-3/4">
             <div className="bg-background rounded-xl p-2">
               <div>
-                <p className="text-xl font-bold">Actors</p>
-                <span className="font-Bungee text-primaryLight">
+                <p className="text-lg font-bold">Actors</p>
+                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
                   {movieInfo?.Actors}
                 </span>
               </div>
               <div className="mt-4">
-                <p className="text-xl font-bold">Director</p>
-                <span className="font-Bungee text-primaryLight">
+                <p className="text-lg font-bold">Director</p>
+                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
                   {movieInfo?.Director}
                 </span>
               </div>
               <div className="mt-4">
-                <p className="text-xl font-bold">BoxOffice</p>
-                <span className="font-Bungee text-primaryLight">
+                <p className="text-lg font-bold">BoxOffice</p>
+                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
                   {!movieInfo?.BoxOffice ? 'N/A' : movieInfo?.BoxOffice}
                 </span>
               </div>
             </div>
 
             {/* Rating logos */}
-            <div className="p-2 bg-background mt-2 rounded-lg">
-              <div className="flex gap-12 text-center justify-center">
+            <div className="p-2 bg-background mt-2 rounded-lg ">
+              <div className="flex gap-10 text-center justify-center">
                 {movieInfo?.Ratings.length === 0 ? (
                   <p className="font-Bungee">no ratings found</p>
                 ) : (
                   movieInfo?.Ratings.map((rating, i) => (
-                    <div key={i} className="justify-center flex flex-col">
+                    <div key={i} className="justify-center flex flex-col ">
                       {sourceToLogo[rating.Source] ? (
                         <Image
                           src={sourceToLogo[rating.Source]}
@@ -134,7 +134,7 @@ const MovieCardInfo = ({
         </div>
 
         {/* Movie plot */}
-        <div className="p-4 md:p-4">
+        <div className="px-4 py-2">
           <div className="lg:overflow-hidden md:h-auto md:overflow-hidden md:text-base text-sm overflow-scroll h-20 p-3 text-justify bg-background rounded-xl">
             <span>{movieInfo?.Plot}</span>
           </div>
