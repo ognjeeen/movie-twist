@@ -143,6 +143,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
               <div>
                 <img
                   className="w-28 h-44 object-cover hover:cursor-pointer"
+                  title="Click to remove"
                   alt={movie.Title}
                   src={movie.Poster}
                   onClick={() => handleDeleteSelectedMovie(movie.imdbID)}

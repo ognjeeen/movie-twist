@@ -13,7 +13,7 @@ const MovieTwistTitle = () => {
 
   return (
     <h1
-      className={`${applicationTitleColor} lg:text-6xl text-4xl text-center m-auto font-Bungee`}
+      className={`${applicationTitleColor} lg:text-6xl text-4xl text-center m-auto font-Bungee select-none`}
     >
       <span>{applicationTitleText}</span>
       <span

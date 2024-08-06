@@ -87,7 +87,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
               } transition-opacity duration-500 ease-in-out relative`}
             >
               <img
-                className={`w-36 h-52 object-cover p-2 ${
+                className={`w-36 h-52 object-cover p-1 hover:p-2 hover:transition-all ${
                   !imageLoaded && 'hidden'
                 }`}
                 alt={movie.Title}
@@ -108,7 +108,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
                 className="absolute top-4 right-4 bg-background text-sm text-white p-1 rounded-lg uppercase font-bold group"
                 onClick={() => setSelectedMovieDetailsId(movie.imdbID)}
               >
-                <span className="hidden group-hover:block text-xs text-white p-2">
+                <span className="hidden group-hover:block text-xs text-white p-2 ">
                   more details
                 </span>
                 <svg
