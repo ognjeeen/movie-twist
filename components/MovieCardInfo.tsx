@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/context/GlobalContext';
 import IMDbLogo from '@/public/IMDbLogo.png';
 import MetacriticLogo from '@/public/MetacriticLogo.png';
 import RottenTomatoesLogo from '@/public/RottenTomatoesLogo.png';
@@ -41,6 +42,8 @@ const MovieCardInfo = ({
     Metacritic: MetacriticLogo,
   };
 
+  const { animeMode } = useGlobalContext();
+
   //Extracting the first two genres from the array of movie genres
   const movieGenre = movieInfo?.Genre.split(',').slice(0, 2);
 
@@ -51,10 +54,18 @@ const MovieCardInfo = ({
 
   return (
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
-      <div className="w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative border border-primary">
+      <div
+        className={`${
+          animeMode ? 'border-animeBluePrimary' : 'border-primary'
+        } w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative border`}
+      >
         {/* Title, released date, runtime */}
         <div className="md:pb-2 pb-2">
-          <h1 className="text-primaryLight text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4">
+          <h1
+            className={`${
+              animeMode ? 'text-animeBluePrimary' : 'text-primaryLight'
+            } text-center m-auto md:text-5xl text-3xl font-Bungee truncate w-3/4`}
+          >
             {movieInfo?.Title}
           </h1>
           <div className="text-center justify-center flex gap-4 text-sm md:text-lg">
@@ -87,19 +98,31 @@ const MovieCardInfo = ({
             <div className="bg-background rounded-xl p-2">
               <div>
                 <p className="text-lg font-bold">Actors</p>
-                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
+                <span
+                  className={`${
+                    animeMode ? 'text-animeBluePrimary' : 'text-primaryLight'
+                  } font-Bungee text-sm sm:text-base`}
+                >
                   {movieInfo?.Actors}
                 </span>
               </div>
               <div className="mt-4">
                 <p className="text-lg font-bold">Director</p>
-                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
+                <span
+                  className={`${
+                    animeMode ? 'text-animeBluePrimary' : 'text-primaryLight'
+                  } font-Bungee text-sm sm:text-base`}
+                >
                   {movieInfo?.Director}
                 </span>
               </div>
               <div className="mt-4">
                 <p className="text-lg font-bold">BoxOffice</p>
-                <span className="font-Bungee text-primaryLight text-sm sm:text-base">
+                <span
+                  className={`${
+                    animeMode ? 'text-animeBluePrimary' : 'text-primaryLight'
+                  } font-Bungee text-sm sm:text-base`}
+                >
                   {!movieInfo?.BoxOffice ? 'N/A' : movieInfo?.BoxOffice}
                 </span>
               </div>
@@ -122,7 +145,13 @@ const MovieCardInfo = ({
                       ) : (
                         <p className="text-lg font-bold">{rating.Source}</p>
                       )}
-                      <p className="font-Bungee text-primaryLight">
+                      <p
+                        className={`${
+                          animeMode
+                            ? 'text-animeBluePrimary'
+                            : 'text-primaryLight'
+                        } font-Bungee `}
+                      >
                         {rating.Value}
                       </p>
                     </div>
@@ -151,7 +180,11 @@ const MovieCardInfo = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={'size-9 text-primary hover:text-primaryLight'}
+            className={`size-9 ${
+              animeMode
+                ? 'text-animeBluePrimary hover:text-animeBlueLight'
+                : 'text-primary hover:text-primaryLight'
+            }`}
           >
             <path
               strokeLinecap="round"
