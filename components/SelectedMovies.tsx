@@ -142,11 +142,18 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
             <li key={movie.imdbID} className="p-4">
               <div>
                 <img
-                  className="w-28 h-44 object-cover hover:cursor-pointer"
+                  className={`w-28 h-44 object-cover ${
+                    !isRandomMovieAnimationActive
+                      ? 'hover:cursor-pointer'
+                      : 'hover:cursor-not-allowed'
+                  }`}
                   title="Click to remove"
                   alt={movie.Title}
                   src={movie.Poster}
-                  onClick={() => handleDeleteSelectedMovie(movie.imdbID)}
+                  onClick={() => {
+                    !isRandomMovieAnimationActive &&
+                      handleDeleteSelectedMovie(movie.imdbID);
+                  }}
                 />
               </div>
             </li>
