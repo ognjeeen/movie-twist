@@ -56,7 +56,7 @@ const MovieCardInfo = ({
     <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
       <div
         className={`${
-          animeMode ? 'border-animeBluePrimary' : 'border-primary'
+          animeMode ? 'border-animeBluePrimary/50' : 'border-primary/50'
         } w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative border`}
       >
         {/* Title, released date, runtime */}
@@ -182,8 +182,8 @@ const MovieCardInfo = ({
             stroke="currentColor"
             className={`size-9 ${
               animeMode
-                ? 'text-animeBluePrimary hover:text-animeBlueLight'
-                : 'text-primary hover:text-primaryLight'
+                ? 'text-animeBluePrimary hover:text-animeBlueLight transition-colors'
+                : 'text-primary hover:text-primaryLight transition-colors'
             }`}
           >
             <path

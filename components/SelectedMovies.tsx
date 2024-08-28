@@ -34,8 +34,8 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   } = useGlobalContext();
   const { width, height } = useWindowSize();
   const buttonColor = animeMode
-    ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover'
-    : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover';
+    ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover transition-colors'
+    : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover transition-colors';
 
   // useEffect checks if the 'clickedMovieId' is valid. If it is, it iterates through movies list to find a movie with the same ID as 'clickedMovieId'. If a match is found, the movie is added to the `userSelectedMoviesList`
   useEffect(() => {
@@ -165,7 +165,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
           <button
             onClick={handleDeleteAll}
             disabled={isRandomMovieAnimationActive}
-            className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40 `}
+            className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40`}
           >
             Clear All
           </button>
@@ -203,7 +203,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
               alt={randomPickedMovie.Title}
               src={randomPickedMovie.Poster}
             />
-            <h2 className="text-xl mb-4 text-center mt-2 pb-6">
+            <h2 className="text-xl mb-4 text-center mt-2 font-Bungee pb-4">
               {randomPickedMovie.Title}
             </h2>
             <button
@@ -218,8 +218,8 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 stroke="currentColor"
                 className={`size-9 ${
                   animeMode
-                    ? 'text-animeBluePrimary hover:text-animeBlueButtonHover'
-                    : 'text-primary hover:text-primaryLight'
+                    ? 'text-animeBluePrimary hover:text-animeBlueLight transition-colors'
+                    : 'text-primary hover:text-primaryLight transition-colors'
                 }`}
               >
                 <path
@@ -229,6 +229,18 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 />
               </svg>
             </button>
+            <div className="justify-center flex pb-4">
+              <button
+                onClick={() => {
+                  setRandomPickedMovie(null);
+                  setIsOpen((prev) => !prev);
+                  handlePickRandomMovie();
+                }}
+                className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40 font-Bungee`}
+              >
+                Pick again
+              </button>
+            </div>
           </div>
         </div>
       )}
