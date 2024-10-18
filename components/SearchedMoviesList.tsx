@@ -87,7 +87,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
               } transition-opacity duration-500 ease-in-out relative`}
             >
               <img
-                className={`w-36 h-52 object-cover p-1 hover:p-2 hover:transition-all ${
+                className={`w-36 h-52 object-cover p-1 hover:p-[5px] hover:transition-all ${
                   !imageLoaded && 'hidden'
                 }`}
                 alt={movie.Title}
