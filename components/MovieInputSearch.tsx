@@ -52,7 +52,7 @@ const MovieInputSearch = () => {
 
   return (
     <input
-      className={`${inputStyle} md:p-4 md:px-6 md:text-xl transition-all duration-300 flex md:w-2/3 lg:w-2/3 xl:w-1/3 placeholder-textColor focus:-translate-y-2 outline-none rounded-xl p-3 px-4 font-Bungee`}
+      className={`${inputStyle} md:p-4 md:px-6 md:text-xl transition-all duration-300 flex w-[300px] sm:w-[500px] md:w-[570px] xl:w-[650px] placeholder-textColor focus:-translate-y-2 outline-none rounded-xl p-3 px-4 font-Bungee`}
       placeholder={placeholderText}
       type="text"
       value={query}

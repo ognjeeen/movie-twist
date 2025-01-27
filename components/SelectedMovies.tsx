@@ -3,6 +3,7 @@ import Confetti from 'react-confetti';
 import toast from 'react-hot-toast';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import { useGlobalContext } from '@/context/GlobalContext';
+import clsx from 'clsx';
 
 type MovieObject = {
   imdbID: string;
@@ -172,10 +173,14 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
           <button
             onClick={handlePickRandomMovie}
             disabled={isRandomMovieAnimationActive}
-            className={`
-              button ${isButtonAnimationActive ? 'animate z-10' : ''}
-              ${animeMode ? 'dark-mode' : ''}
-              p-2 border-none rounded-lg w-4/5 lg:w-40 ${buttonColor}`}
+            className={clsx(
+              buttonColor,
+              {
+                'animate z-10 button': isButtonAnimationActive,
+                'dark-mode': animeMode,
+              },
+              'p-2 border-none rounded-lg w-4/5 lg:w-40'
+            )}
           >
             Random {animeMode ? 'Anime' : 'Movie'}
           </button>

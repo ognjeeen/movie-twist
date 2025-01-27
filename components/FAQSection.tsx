@@ -13,11 +13,11 @@ const faqData: FAQItem[] = [
   {
     question: 'What is this application?',
     answer:
-      'Movie Twist is an application built using Next.js with TailwindCSS and TypeScript. Movie Twist helps you decide what movie you should watch from your provided list of selected movies,',
+      'Movie Twist is a web application built with Next.js, TailwindCSS, and TypeScript. It helps you decide which movie to watch by randomly selecting one from your list of chosen movies.',
   },
   {
     question: 'How do I use this application?',
-    answer: `You can use this application by searching for movies (using their full name) and adding them to the selected list. When you find a movie you want to add to the selected list, just click on it and it will be automatically selected. After that, all you have to do is click on the 'Random Movie' button and wait for the application to give you a random movie from the list you created,`,
+    answer: `Movie Twist helps you decide what to watch by choosing a random movie for you. You can search for movies by their full name and add them to your selected movie list. Once you've found a movie you'd like to add, just click on it, and it will be automatically included in your list. After building your list, simply click the 'Random Movie' button, and the application will pick a random title for you to watch.`,
   },
   {
     question: 'Is Movie Twist only available for movies?',
@@ -26,11 +26,11 @@ const faqData: FAQItem[] = [
   },
   {
     question: 'What is anime mode?',
-    answer: `Well, you need to try it out and see for yourself :). Maybe it will spawn an emo girl or boy next to you if you turn this option on. Jokes aside, it's just a theme :),`,
+    answer: `Well, you need to try it out and see for yourself. Maybe it will spawn an emo girl or emo boy next to you if you turn this option on 😆. Jokes aside, it's just a theme,`,
   },
   {
     question: 'Can I give contribution to Movie Twist?',
-    answer: `Yes! Any help is really appreciated. You can help me in two ways: first, by assisting with development, and second, through donations. I would say to buy me a coffee only if you find this application useful ;). In either case, you can contact me on Discord at M0xei (m0xei) or buy me a coffee at <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a>. My main priority is to upgrade the API so it can support more requests per day, which costs from 1-25€ per month.`,
+    answer: `Yes! Any help would mean a lot. You can support me in two ways: by contributing to the development or through donations. If you find this application useful, feel free to buy me a coffee on <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a> 😊. In either case, you can contact me on Discord at M0xei (m0xei). My main priority is to upgrade the API so it can support more requests per day, which costs from 1-25€ per month.`,
   },
 ];
 

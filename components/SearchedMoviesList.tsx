@@ -76,7 +76,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
 
   return (
     <div className="overflow-hidden mx-auto">
-      <ul className="flex flex-row mt-10 gap-4 px-4 overflow-x-auto xl:overflow-hidden 2xl:h-[270px] xl:justify-center">
+      <ul className="flex flex-row mt-10 gap-4 px-4 overflow-x-auto xl:overflow-hidden xl:justify-center p-2">
         {/* Displaying list of searched movies */}
         {filteredMovies.map((movie) => (
           <li
@@ -110,7 +110,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
                 className="absolute top-4 right-4 bg-background text-sm text-white p-1 rounded-lg uppercase font-bold group"
                 onClick={() => setSelectedMovieDetailsId(movie.imdbID)}
               >
-                <span className="hidden group-hover:block text-xs text-white p-2 ">
+                <span className="hidden group-hover:inline-block text-xs text-white p-2 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 -translate-y-2">
                   more details
                 </span>
                 <svg
