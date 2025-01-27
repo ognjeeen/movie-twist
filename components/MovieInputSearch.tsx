@@ -1,18 +1,21 @@
-'use client';
-import { useGlobalContext } from '@/context/GlobalContext';
-import { useEffect, useRef, useState } from 'react';
+"use client";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { useEffect, useRef, useState } from "react";
+import { Bungee } from "next/font/google";
+
+const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
 const MovieInputSearch = () => {
   const { query, setQuery, animeMode } = useGlobalContext();
 
-  const passedPlaceholder = animeMode ? 'Chainsaw Man' : 'Interstellar';
-  const [placeholderText, setPlaceholder] = useState('');
+  const passedPlaceholder = animeMode ? "Chainsaw Man" : "Interstellar";
+  const [placeholderText, setPlaceholder] = useState("");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    setQuery('');
+    setQuery("");
   }, []);
 
   useEffect(() => {
@@ -35,7 +38,7 @@ const MovieInputSearch = () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      setPlaceholder('');
+      setPlaceholder("");
     }
   }, [isFocused, placeholderIndex]);
 
@@ -48,11 +51,11 @@ const MovieInputSearch = () => {
     setPlaceholderIndex(0);
   };
 
-  const inputStyle = animeMode ? 'bg-animeBluePrimary' : 'bg-primary';
+  const inputStyle = animeMode ? "bg-animeBluePrimary" : "bg-primary";
 
   return (
     <input
-      className={`${inputStyle} md:p-4 md:px-6 md:text-xl transition-all duration-300 flex w-[300px] sm:w-[500px] md:w-[570px] xl:w-[650px] placeholder-textColor focus:-translate-y-2 outline-none rounded-xl p-3 px-4 font-Bungee`}
+      className={`${bungeeFont.className} ${inputStyle} flex w-[300px] rounded-xl p-3 px-4 placeholder-textColor outline-none transition-all duration-300 focus:-translate-y-2 sm:w-[500px] md:w-[570px] md:p-4 md:px-6 md:text-xl xl:w-[650px]`}
       placeholder={placeholderText}
       type="text"
       value={query}
@@ -62,9 +65,9 @@ const MovieInputSearch = () => {
       autoComplete="off"
       maxLength={20}
       style={{
-        maxHeight: '60px',
-        MozOsxFontSmoothing: 'grayscale',
-        WebkitFontSmoothing: 'antialiased',
+        maxHeight: "60px",
+        MozOsxFontSmoothing: "grayscale",
+        WebkitFontSmoothing: "antialiased",
       }}
     />
   );

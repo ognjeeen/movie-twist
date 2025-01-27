@@ -21,9 +21,6 @@ const config: Config = {
         animeBlueLight: '#95d2d3',
         animeBlueButtonHover: '#2e7b7a',
       },
-      fontFamily: {
-        Bungee: ['Bungee'],
-      },
       keyframes: {
         click: {
           '0%, 100%': { transform: 'scale(1)' },

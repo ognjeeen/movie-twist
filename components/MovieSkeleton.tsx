@@ -1,8 +1,8 @@
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const MovieSkeleton = () => (
-  <div className="flex-shrink-0 w-36 flex flex-col items-center">
+  <div className="flex w-36 flex-shrink-0 flex-col items-center">
     <Skeleton
       width={144}
       height={208}
@@ -12,7 +12,7 @@ const MovieSkeleton = () => (
 
     <Skeleton
       width={144}
-      style={{ marginTop: '8px' }}
+      style={{ marginTop: "8px" }}
       baseColor="#343a40"
       highlightColor="#212529"
     />

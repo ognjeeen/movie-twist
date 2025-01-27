@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
-import Confetti from 'react-confetti';
-import toast from 'react-hot-toast';
-import useWindowSize from 'react-use/lib/useWindowSize';
-import { useGlobalContext } from '@/context/GlobalContext';
-import clsx from 'clsx';
+import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
+import toast from "react-hot-toast";
+import useWindowSize from "react-use/lib/useWindowSize";
+import { useGlobalContext } from "@/context/GlobalContext";
+import clsx from "clsx";
+import { Bungee } from "next/font/google";
+
+const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
 type MovieObject = {
   imdbID: string;
@@ -35,19 +38,19 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   } = useGlobalContext();
   const { width, height } = useWindowSize();
   const buttonColor = animeMode
-    ? 'bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover transition-colors'
-    : 'bg-primary hover:bg-buttonHover disabled:bg-buttonHover transition-colors';
+    ? "bg-animeBluePrimary hover:bg-animeBlueButtonHover disabled:bg-animeBlueButtonHover transition-colors"
+    : "bg-primary hover:bg-buttonHover disabled:bg-buttonHover transition-colors";
 
   // useEffect checks if the 'clickedMovieId' is valid. If it is, it iterates through movies list to find a movie with the same ID as 'clickedMovieId'. If a match is found, the movie is added to the `userSelectedMoviesList`
   useEffect(() => {
     if (clickedMovieId) {
       const isMovieFound = movies.find(
-        (movie) => movie.imdbID === clickedMovieId
+        (movie) => movie.imdbID === clickedMovieId,
       );
 
       if (isMovieFound) {
         const alreadySelected = userSelectedMoviesList.some(
-          (movie) => movie.imdbID === isMovieFound.imdbID
+          (movie) => movie.imdbID === isMovieFound.imdbID,
         );
 
         if (!alreadySelected) {
@@ -64,19 +67,19 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
     toast((t) => (
       <div className="text-base lg:text-lg">
         <span>
-          Are you sure you want to remove all {animeMode ? 'anime' : 'movies'}{' '}
+          Are you sure you want to remove all {animeMode ? "anime" : "movies"}{" "}
           from list?
         </span>
-        <div className="flex gap-4 mt-2">
+        <div className="mt-2 flex gap-4">
           <button
             onClick={() => {
               setUserSelectedMoviesList([]);
               setClickedMovieId(null);
               setClickedMovieIdsList([]);
-              setQuery('');
+              setQuery("");
               toast.dismiss(t.id);
             }}
-            className="text-green-500 p-2 font-bold hover:text-green-600"
+            className="p-2 font-bold text-green-500 hover:text-green-600"
           >
             Yes
           </button>
@@ -84,7 +87,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
             onClick={() => {
               toast.dismiss(t.id);
             }}
-            className="text-red-500 p-2 font-bold hover:text-red-600"
+            className="p-2 font-bold text-red-500 hover:text-red-600"
           >
             No
           </button>
@@ -95,11 +98,11 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
   const handleDeleteSelectedMovie = (id: string) => {
     setUserSelectedMoviesList((prevSelectedMovies) =>
-      prevSelectedMovies.filter((movie) => movie.imdbID !== id)
+      prevSelectedMovies.filter((movie) => movie.imdbID !== id),
     );
 
     setClickedMovieIdsList((prevClickedIds) =>
-      prevClickedIds.filter((clickedId) => clickedId !== id)
+      prevClickedIds.filter((clickedId) => clickedId !== id),
     );
 
     setClickedMovieId(null);
@@ -111,7 +114,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
     setTimeout(() => {
       const randomNumber = Math.floor(
-        Math.random() * userSelectedMoviesList.length
+        Math.random() * userSelectedMoviesList.length,
       );
       setRandomPickedMovie(userSelectedMoviesList[randomNumber]);
       setRandomMovieAnimationActive(false);
@@ -132,41 +135,54 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
   return (
     <>
-      <div className="bg-backgroundLight xl:w-[1150px] w-4/6 mt-10 rounded-lg m-auto mb-10 relative drop-shadow-lg pt-6 ">
+      <div className="bg-backgroundLight relative m-auto mt-10 mb-10 w-4/6 rounded-lg pt-6 drop-shadow-lg xl:w-[1150px]">
         {/* Displaying list of selected (added) movies by user */}
         <ul
           className={`flex flex-wrap justify-center ${
-            isRandomMovieAnimationActive ? 'animate-merge' : ''
+            isRandomMovieAnimationActive ? "animate-merge" : ""
           }`}
         >
           {userSelectedMoviesList.map((movie) => (
             <li key={movie.imdbID} className="p-4">
-              <div>
+              <div className="group relative h-48 w-32">
+                {/* Slika filma */}
                 <img
-                  className={`w-28 h-44 object-cover ${
-                    !isRandomMovieAnimationActive
-                      ? 'hover:cursor-pointer'
-                      : 'hover:cursor-not-allowed'
-                  }`}
+                  className={`h-full w-full object-cover`}
                   title="Click to remove"
                   alt={movie.Title}
                   src={movie.Poster}
+                />
+
+                {/* Dodatne informacije koje se pojavljuju na hover */}
+                <div
                   onClick={() => {
                     !isRandomMovieAnimationActive &&
                       handleDeleteSelectedMovie(movie.imdbID);
                   }}
-                />
+                  className={`${
+                    !isRandomMovieAnimationActive
+                      ? "hover:cursor-pointer"
+                      : "hover:cursor-not-allowed"
+                  } bg-opacity-70 absolute inset-0 mx-auto flex flex-col items-center justify-center bg-black p-1 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+                >
+                  <h2 className={`${bungeeFont.className} font-bold`}>
+                    {movie.Title}
+                  </h2>
+                  <p className="mt-1 text-sm">Click to remove</p>
+                </div>
               </div>
             </li>
           ))}
         </ul>
 
         {/* Clear All and Random Movie buttons */}
-        <div className="flex flex-col gap-2 justify-center pb-4 m-auto items-center text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base font-Bungee text-textColor mt-10">
+        <div
+          className={`${bungeeFont.className} text-textColor m-auto mt-10 flex flex-col items-center justify-center gap-2 pb-4 text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base`}
+        >
           <button
             onClick={handleDeleteAll}
             disabled={isRandomMovieAnimationActive}
-            className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40`}
+            className={`${buttonColor} w-4/5 rounded-lg border-none p-2 transition-transform duration-300 ease-in-out lg:w-40 hover:lg:-translate-y-1`}
           >
             Clear All
           </button>
@@ -176,44 +192,46 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
             className={clsx(
               buttonColor,
               {
-                'animate z-10 button': isButtonAnimationActive,
-                'dark-mode': animeMode,
+                "animate button z-10": isButtonAnimationActive,
+                "dark-mode": animeMode,
               },
-              'p-2 border-none rounded-lg w-4/5 lg:w-40'
+              "w-4/5 rounded-lg border-none p-2 transition-transform duration-300 ease-in-out lg:w-40 hover:lg:-translate-y-1",
             )}
           >
-            Random {animeMode ? 'Anime' : 'Movie'}
+            Random {animeMode ? "Anime" : "Movie"}
           </button>
         </div>
       </div>
 
       {/* Card for displaying what application picked as a random movie */}
       {randomPickedMovie && isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10">
+        <div className="bg-opacity-40 fixed inset-0 z-10 flex items-center justify-center bg-black">
           <Confetti
             width={width}
             height={height}
             numberOfPieces={numberOfConfettiPieces}
           />
-          <div className="pt-10 bg-backgroundLight rounded-lg relative max-w-lg w-full mx-4">
+          <div className="bg-backgroundLight relative mx-4 w-full max-w-lg rounded-lg pt-10">
             <h1
-              className={`${
-                animeMode ? 'text-animeBlueLight' : 'text-primaryLight'
-              } text-center pb-10 text-5xl font-Bungee`}
+              className={`${bungeeFont.className} ${
+                animeMode ? "text-animeBlueLight" : "text-primaryLight"
+              } pb-10 text-center text-5xl`}
             >
               go watch
             </h1>
             <img
-              className="w-48 h-72 object-cover mx-auto"
+              className="mx-auto h-72 w-48 object-cover"
               alt={randomPickedMovie.Title}
               src={randomPickedMovie.Poster}
             />
-            <h2 className="text-xl mb-4 text-center mt-2 font-Bungee pb-4">
+            <h2
+              className={`${bungeeFont.className} mt-2 mb-4 pb-4 text-center text-xl`}
+            >
               {randomPickedMovie.Title}
             </h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute right-0 top-0 p-2"
+              className="absolute top-0 right-0 p-2"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -221,10 +239,10 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className={`size-9 ${
+                className={`size-9 transition-transform duration-300 ease-in-out hover:lg:scale-110 ${
                   animeMode
-                    ? 'text-animeBluePrimary hover:text-animeBlueLight transition-colors'
-                    : 'text-primary hover:text-primaryLight transition-colors'
+                    ? "text-animeBluePrimary hover:text-animeBlueLight transition-colors"
+                    : "text-primary hover:text-primaryLight transition-colors"
                 }`}
               >
                 <path
@@ -234,14 +252,14 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 />
               </svg>
             </button>
-            <div className="justify-center flex pb-4">
+            <div className="flex justify-center pb-4">
               <button
                 onClick={() => {
                   setRandomPickedMovie(null);
                   setIsOpen((prev) => !prev);
                   handlePickRandomMovie();
                 }}
-                className={`${buttonColor} p-2 border-none rounded-lg w-4/5 lg:w-40 font-Bungee`}
+                className={`${bungeeFont.className} ${buttonColor} w-4/5 rounded-lg border-none p-2 transition-transform duration-300 ease-in-out lg:w-40 hover:lg:-translate-y-1`}
               >
                 Pick again
               </button>

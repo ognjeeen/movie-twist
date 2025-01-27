@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useGlobalContext } from '@/context/GlobalContext';
-import { useEffect, useRef, useState } from 'react';
-import ErrorMessage from './ErrorMessage';
-import SearchedMoviesList from './SearchedMoviesList';
-import SelectedMovies from './SelectedMovies';
-import Spinner from './Spinner';
-import axios from 'axios';
+import { useGlobalContext } from "@/context/GlobalContext";
+import { useEffect, useRef, useState } from "react";
+import ErrorMessage from "./ErrorMessage";
+import SearchedMoviesList from "./SearchedMoviesList";
+import SelectedMovies from "./SelectedMovies";
+import Spinner from "./Spinner";
+import axios from "axios";
 
 type MovieObject = {
   imdbID: string;
@@ -18,7 +18,7 @@ const SearchedMovies = () => {
   const controllerRef = useRef<AbortController>();
   const [movies, setMovies] = useState<MovieObject[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { query } = useGlobalContext();
 
@@ -33,7 +33,7 @@ const SearchedMovies = () => {
 
     async function fetchMovies() {
       setLoading(true);
-      setError('');
+      setError("");
 
       try {
         const response = await axios.get(`/api/fetchMovies`, {
@@ -42,7 +42,7 @@ const SearchedMovies = () => {
         });
 
         const data = response.data;
-        if (data.Response === 'False') throw new Error('Movie not found');
+        if (data.Response === "False") throw new Error("Movie not found");
 
         setMovies(data.Search);
       } catch (error) {
@@ -50,7 +50,7 @@ const SearchedMovies = () => {
         } else if (error instanceof Error) {
           setError(error.message);
         } else {
-          setError('An unknown error occurred');
+          setError("An unknown error occurred");
         }
       } finally {
         setLoading(false);
@@ -60,7 +60,7 @@ const SearchedMovies = () => {
     if (query.length < 2) {
       setMovies([]);
       setError(
-        'Search for movies, TV shows, and anime to add to your random picker list'
+        "Search for movies, TV shows, and anime to add to your random picker list",
       );
       setLoading(false);
       return;
