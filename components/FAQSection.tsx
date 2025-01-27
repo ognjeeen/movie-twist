@@ -26,7 +26,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "What is anime mode?",
-    answer: `Well, you need to try it out and see for yourself. Maybe it will spawn an emo girl or emo boy next to you if you turn this option on 😆. Jokes aside, it's just a theme,`,
+    answer: `Well, you need to try it out and see for yourself. Maybe it will spawn an emo girl or emo boy next to you if you turn this option on 😆. Jokes aside, it's just a theme.`,
   },
   {
     question: "Can I give contribution to Movie Twist?",
@@ -42,10 +42,10 @@ const FAQSection = () => {
   }, []);
 
   return (
-    <div className="h-full w-full flex-col md:flex md:flex-row">
+    <section className="h-full w-full flex-col md:flex md:flex-row">
       <div className="flex items-center justify-center pr-4 md:justify-end md:pr-0 lg:w-3/6">
         <div className="mb-10 flex flex-col pt-4 text-center text-primaryLight">
-          <h1 className="text-4xl font-bold">FAQ</h1>
+          <h2 className="text-4xl font-bold">FAQ</h2>
           <span>Scroll to see all FAQ</span>
           <Link href="/">&larr; Go back</Link>
         </div>
@@ -56,16 +56,16 @@ const FAQSection = () => {
             key={index}
             className="mb-10 flex flex-col items-center justify-center p-4 md:min-h-screen md:snap-start"
           >
-            <h1 className="mb-2 text-center text-lg font-bold text-primaryLight md:text-2xl">
+            <h3 className="mb-2 text-center text-lg font-bold text-primaryLight md:text-2xl">
               {faq.question}
-            </h1>
-            <p className="text-justify text-base sm:w-2/3 sm:text-center md:w-3/4 md:text-lg lg:w-4/6">
+            </h3>
+            <p className="text-pretty text-center text-base sm:w-2/3 sm:text-center md:w-3/4 md:text-lg lg:w-4/6">
               <span dangerouslySetInnerHTML={{ __html: faq.answer }} />
             </p>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
