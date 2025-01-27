@@ -53,11 +53,11 @@ const MovieCardInfo = ({
   };
 
   return (
-    <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10">
+    <div className="fixed inset-0 justify-center items-center flex bg-black bg-opacity-40 z-10 px-4">
       <div
         className={`${
           animeMode ? 'border-animeBluePrimary/50' : 'border-primary/50'
-        } w-11/12 2xl:w-2/5 xl:w-2/3 lg:w-2/3 md:w-3/4 pt-10 bg-backgroundLight rounded-lg relative border`}
+        } pt-10 bg-backgroundLight rounded-lg relative border xl:max-w-[800px]`}
       >
         {/* Title, released date, runtime */}
         <div className="md:pb-2 pb-2">

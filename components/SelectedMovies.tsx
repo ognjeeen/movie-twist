@@ -131,7 +131,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
   return (
     <>
-      <div className="bg-backgroundLight w-3/5 mt-10 rounded-lg m-auto mb-10 relative drop-shadow-lg pt-6">
+      <div className="bg-backgroundLight xl:w-[1150px] w-4/6 mt-10 rounded-lg m-auto mb-10 relative drop-shadow-lg pt-6 ">
         {/* Displaying list of selected (added) movies by user */}
         <ul
           className={`flex flex-wrap justify-center ${

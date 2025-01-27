@@ -7,7 +7,7 @@ const Footer = () => {
   const { toggleAnimeMode } = useGlobalContext();
 
   return (
-    <div className="bg-gray bottom-0 w-full pb-4 2xl:fixed font-Bungee select-none text-sm md:text-base">
+    <footer className="bg-gray bottom-0 w-full pb-4 2xl:fixed font-Bungee select-none text-sm md:text-base">
       <div className="md:flex md:justify-between items-center m-auto justify-center w-11/12">
         <div className="flex gap-6 justify-center items-center">
           <div>Anime mode</div>
@@ -28,7 +28,7 @@ const Footer = () => {
           FAQ
         </Link>
       </div>
-    </div>
+    </footer>
   );
 };
 

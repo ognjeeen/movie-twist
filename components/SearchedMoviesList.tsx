@@ -70,16 +70,18 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
   }, [isOpen]);
 
   // Movies without a poster are not included in a search list
-  const filteredMovies = movies.filter((movie) => movie.Poster !== 'N/A');
+  const filteredMovies = movies.filter(
+    (movie) => movie.Poster !== 'N/A' && movie.Poster !== 'Not Found'
+  );
 
   return (
-    <div className="overflow-x-auto">
-      <ul className="flex flex-nowrap m-auto mt-10 pl-4 lg:pl-0 gap-2 justify-start md:justify-start 2xl:justify-center">
+    <div className="overflow-hidden mx-auto">
+      <ul className="flex flex-row mt-10 gap-4 px-4 overflow-x-auto xl:overflow-hidden 2xl:h-[270px] xl:justify-center">
         {/* Displaying list of searched movies */}
         {filteredMovies.map((movie) => (
           <li
             key={movie.imdbID}
-            className="flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer focus:outline-none active:animate-click"
+            className="xl:hover:scale-105 transform transition-transform duration-300 ease-in-out flex-shrink-0 w-36 flex flex-col items-center hover:bg-backgroundLight hover:cursor-pointer focus:outline-none"
           >
             <div
               className={`${
@@ -87,7 +89,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
               } transition-opacity duration-500 ease-in-out relative`}
             >
               <img
-                className={`w-36 h-52 object-cover p-1 hover:p-[5px] hover:transition-all ${
+                className={`w-36 h-52 object-cover p-1 hover:transition-all ${
                   !imageLoaded && 'hidden'
                 }`}
                 alt={movie.Title}
