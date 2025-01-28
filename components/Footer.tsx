@@ -5,13 +5,26 @@ import Link from "next/link";
 import { Bungee } from "next/font/google";
 import pumpaj from "@/public/pumpaj.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Dodajte useEffect
 
 const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
 const Footer = () => {
   const { toggleAnimeMode } = useGlobalContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIfMobile();
+
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   return (
     <footer
@@ -45,23 +58,32 @@ const Footer = () => {
           {/* Prikaz modala */}
           <div
             className="group relative"
-            onClick={() => setIsModalOpen(!isModalOpen)}
+            onClick={() => {
+              if (isMobile) {
+                setIsModalOpen(!isModalOpen);
+              }
+            }}
           >
             <Image src={pumpaj.src} alt="Pumpaj" width={50} height={50} />
 
             {/* Modal za hover (desktop) */}
-            <div className="pointer-hover:block absolute -top-16 left-1/2 hidden w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg group-hover:block">
-              PUMPAJ!
-            </div>
+            {!isMobile && (
+              <div className="pointer-hover:block absolute -top-16 left-1/2 hidden w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg group-hover:block">
+                PUMPAJ!
+              </div>
+            )}
 
             {/* Modal za klik (mobilni) */}
-            <div
-              className={`absolute -top-16 left-1/2 w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg transition-opacity duration-300 md:hidden ${
-                isModalOpen ? "opacity-100" : "pointer-events-none opacity-0"
-              }`}
-            >
-              PUMPAJ!
-            </div>
+            {isMobile && (
+              <div
+                key={isModalOpen ? "open" : "closed"}
+                className={`absolute -top-16 left-1/2 w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg transition-opacity duration-300 ${
+                  isModalOpen ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
+              >
+                PUMPAJ!
+              </div>
+            )}
           </div>
         </div>
       </div>
