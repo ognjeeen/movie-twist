@@ -2,7 +2,7 @@
 
 import { useGlobalContext } from "@/context/GlobalContext";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type FAQItem = {
   question: string;
@@ -30,7 +30,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Can I give contribution to Movie Twist?",
-    answer: `Yes! Any help would mean a lot. You can support me in two ways: by contributing to the development or through donations. If you find this application useful, feel free to buy me a coffee on <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a> 😊. In either case, you can contact me on Discord at M0xei (m0xei). My main priority is to upgrade the API so it can support more requests per day, which costs from 1-25€ per month.`,
+    answer: `Yes! Any help would mean a lot. You can support me in two ways: by contributing to the development or through donations. If you find this application useful, feel free to buy me a coffee on <a href="https://ko-fi.com/ognjeeen" target="_blank" rel="noopener noreferrer" style="color: #e1ab65; font-weight:bold">Ko-fi</a> 😊. In either case, you can contact me on Discord at M0xei (m0xei). My main priority is to upgrade the API so it can support more requests per day, which costs from 1€-25€ per month.`,
   },
 ];
 
@@ -50,11 +50,11 @@ const FAQSection = () => {
           <Link href="/">&larr; Go back</Link>
         </div>
       </div>
-      <div className="m-auto h-full w-full snap-y md:w-5/6 md:snap-mandatory md:overflow-y-auto">
+      <div className="m-auto h-full w-full snap-y md:w-5/6 md:overflow-y-auto">
         {faqData.map((faq, index) => (
           <div
             key={index}
-            className="mb-10 flex flex-col items-center justify-center p-4 md:min-h-screen md:snap-start"
+            className="mb-10 flex flex-col items-center justify-center p-4 md:min-h-screen"
           >
             <h3 className="mb-2 text-center text-lg font-bold text-primaryLight md:text-2xl">
               {faq.question}

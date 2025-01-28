@@ -3,17 +3,22 @@
 import { useGlobalContext } from "@/context/GlobalContext";
 import Link from "next/link";
 import { Bungee } from "next/font/google";
+import pumpaj from "@/public/pumpaj.png";
+import Image from "next/image";
+import { useState } from "react";
 
 const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
 const Footer = () => {
   const { toggleAnimeMode } = useGlobalContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <footer
       className={`${bungeeFont.className} bg-gray bottom-0 w-full select-none pb-4 text-sm md:text-base 2xl:fixed`}
     >
-      <div className="m-auto w-11/12 items-center justify-center md:flex md:justify-between">
+      <div className="m-auto flex w-11/12 flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
+        {/* Sekcija za Anime mode */}
         <div className="flex items-center justify-center gap-6">
           <div>Anime mode</div>
           <label className="inline-flex cursor-pointer items-center">
@@ -29,9 +34,32 @@ const Footer = () => {
             </span>
           </label>
         </div>
-        <Link href="/faq" className="flex justify-center pt-2">
+
+        {/* FAQ Link */}
+        <Link href="/faq" className="flex justify-center">
           FAQ
         </Link>
+
+        {/* Sekcija za sliku */}
+        <div className="relative flex items-center justify-center">
+          {/* Prikaz modala */}
+          <div
+            className="group relative"
+            onClick={() => setIsModalOpen(!isModalOpen)}
+          >
+            <Image src={pumpaj.src} alt="Pumpaj" width={50} height={50} />
+            {/* Modal za hover (desktop) */}
+            <div className="pointer-hover:block absolute -top-16 left-1/2 hidden w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg group-hover:block">
+              PUMPAJ!
+            </div>
+            {/* Modal za klik (mobilni) */}
+            {isModalOpen && (
+              <div className="absolute -top-16 left-1/2 w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg md:hidden">
+                PUMPAJ!
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </footer>
   );
