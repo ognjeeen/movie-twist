@@ -48,16 +48,20 @@ const Footer = () => {
             onClick={() => setIsModalOpen(!isModalOpen)}
           >
             <Image src={pumpaj.src} alt="Pumpaj" width={50} height={50} />
+
             {/* Modal za hover (desktop) */}
             <div className="pointer-hover:block absolute -top-16 left-1/2 hidden w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg group-hover:block">
               PUMPAJ!
             </div>
+
             {/* Modal za klik (mobilni) */}
-            {isModalOpen && (
-              <div className="absolute -top-16 left-1/2 w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg md:hidden">
-                PUMPAJ!
-              </div>
-            )}
+            <div
+              className={`absolute -top-16 left-1/2 w-40 -translate-x-1/2 transform rounded-lg bg-backgroundLight p-4 text-center text-red-500 shadow-lg transition-opacity duration-300 md:hidden ${
+                isModalOpen ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
+            >
+              PUMPAJ!
+            </div>
           </div>
         </div>
       </div>
