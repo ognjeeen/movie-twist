@@ -1,11 +1,11 @@
 "use client";
 
 import { useGlobalContext } from "@/context/GlobalContext";
-import Link from "next/link";
-import { Bungee } from "next/font/google";
 import pumpaj from "@/public/pumpaj.png";
+import { Bungee } from "next/font/google";
 import Image from "next/image";
-import { useState, useEffect } from "react"; // Dodajte useEffect
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
@@ -55,7 +55,6 @@ const Footer = () => {
 
         {/* Sekcija za sliku */}
         <div className="relative flex items-center justify-center">
-          {/* Prikaz modala */}
           <div
             className="group relative"
             onClick={() => {

@@ -1,18 +1,17 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { GlobalProvider } from '@/context/GlobalContext';
-import { Toaster } from 'react-hot-toast';
-import GoogleAnalytics from '@/GoogleAnalytics';
-import Head from 'next/head';
+import { GlobalProvider } from "@/context/GlobalContext";
+import GoogleAnalytics from "@/GoogleAnalytics";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Movie Twist',
+  title: "Movie Twist",
   description:
-    'Enjoy easy browsing of movies, TV shows, and anime. Add your favorites to a list and let Movie Twist make the decision for you when you’re unsure of what to watch.',
-  keywords: 'movie, find movie, random movie',
+    "Enjoy easy browsing of movies, TV shows, and anime. Add to a list and let Movie Twist make the decision for you when you’re unsure of what to watch.",
+  keywords: "movie, find movie, random movie",
 };
 
 export default function RootLayout({
@@ -28,15 +27,14 @@ export default function RootLayout({
           <meta name="title" content="Movie Twist" />
           <meta
             name="description"
-            content="Enjoy easy browsing of movies, TV shows, and anime. Add your favorites to a list and let Movie Twist make the decision for you when you’re unsure of what to watch."
+            content="Enjoy easy browsing of movies, TV shows, and anime. Add to a list and let Movie Twist make the decision for you when you’re unsure of what to watch."
           />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://movie-twist.vercel.app/" />
           <meta property="og:title" content="Movie Twist" />
           <meta
             property="og:description"
-            content="Enjoy easy browsing of movies, TV shows, and anime. Add your favorites to a list and let Movie Twist make the decision for you when you’re unsure of what to watch
-"
+            content="Enjoy easy browsing of movies, TV shows, and anime. Add to a list and let Movie Twist make the decision for you when you’re unsure of what to watch."
           />
           <meta property="og:image" content="https://i.imgur.com/DELmYeE.png" />
           <meta name="twitter:card" content="summary_large_image" />
@@ -44,7 +42,7 @@ export default function RootLayout({
           <meta name="twitter:title" content="Movie Twist" />
           <meta
             name="twitter:description"
-            content="Enjoy easy browsing of movies, TV shows, and anime. Add your favorites to a list and let Movie Twist make the decision for you when you’re unsure of what to watch."
+            content="Enjoy easy browsing of movies, TV shows, and anime. Add to a list and let Movie Twist make the decision for you when you’re unsure of what to watch."
           />
           <meta
             name="twitter:image"
@@ -55,7 +53,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Toaster
             toastOptions={{
-              style: { background: '#343a40', color: '#dee2e6' },
+              style: { background: "#343a40", color: "#dee2e6" },
             }}
           />
         </body>
