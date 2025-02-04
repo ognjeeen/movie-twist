@@ -10,12 +10,12 @@ import axios from "axios";
 
 type MovieObject = {
   tmdbId: string;
+  mediaType: string;
   Title: string;
   Poster: string;
 };
 
 const SearchedMovies = () => {
-  const controllerRef = useRef<AbortController>();
   const [movies, setMovies] = useState<MovieObject[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,7 +39,8 @@ const SearchedMovies = () => {
         const transformedMovies = data.results
           .map((movie: any) => ({
             tmdbId: movie.id.toString(),
-            Title: movie.title,
+            mediaType: movie.media_type,
+            Title: movie.title || movie.name,
             Poster: movie.poster_path
               ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
               : "N/A",

@@ -107,7 +107,6 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {/* {movieInfo?.Actors} */}
                   {movieInfo?.Actors === "N/A"
                     ? "No actor data found"
                     : movieInfo?.Actors}
@@ -120,7 +119,6 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {/* {movieInfo?.Director} */}
                   {movieInfo?.Director === "N/A"
                     ? "No director data found"
                     : movieInfo?.Director}
@@ -133,8 +131,8 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {/* {!movieInfo?.BoxOffice ? "N/A" : movieInfo?.BoxOffice} */}
-                  {movieInfo?.BoxOffice === "N/A"
+                  {movieInfo?.BoxOffice === "N/A" ||
+                  movieInfo?.BoxOffice === undefined
                     ? "No box office data found"
                     : movieInfo?.BoxOffice}
                 </span>

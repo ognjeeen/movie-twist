@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie`,
+      `https://api.themoviedb.org/3/search/multi`,
       {
         params: { query, api_key: TMDB_API_KEY, page: 1 },
       },

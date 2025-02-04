@@ -7,6 +7,7 @@ const OMDB_API_KEY = process.env.OMDB_API_KEY;
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("selectedMovieDetailsId");
+  const mediaType = searchParams.get("mediaType");
 
   if (!id) {
     return NextResponse.json(
@@ -16,19 +17,32 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const tmdbResponse = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}`,
-      {
-        params: { id, api_key: TMDB_API_KEY },
-      },
-    );
+    let omdbId = null;
 
-    const omdbapi = tmdbResponse.data.imdb_id;
-    // const omdbapi = "tt0120338";
+    const tmdbUrl =
+      mediaType === "movie"
+        ? `https://api.themoviedb.org/3/movie/${id}`
+        : `https://api.themoviedb.org/3/tv/${id}/external_ids`;
+
+    const tmdbResponse = await axios
+      .get(tmdbUrl, { params: { api_key: TMDB_API_KEY } })
+      .catch(() => null);
+
+    if (tmdbResponse?.data?.imdb_id) {
+      omdbId = tmdbResponse.data.imdb_id;
+    }
+
+    if (!omdbId) {
+      return NextResponse.json(
+        { message: "IMDb ID not found for this movie or TV show" },
+        { status: 404 },
+      );
+    }
 
     const response = await axios.get(
-      `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${omdbapi}&plot=full`,
+      `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${omdbId}&plot=full`,
     );
+
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return NextResponse.json(

@@ -7,6 +7,7 @@ import Spinner from "./Spinner";
 
 type SearchedMoviesList = {
   tmdbId: string;
+  mediaType: string;
   Title: string;
   Poster: string;
 };
@@ -30,13 +31,25 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
   useEffect(() => {
     if (!selectedMovieDetailsId) return;
 
+    const selectedMovie = movies.find(
+      (movie) => movie.tmdbId === selectedMovieDetailsId,
+    );
+
+    if (!selectedMovie) {
+      setError("Movie not found");
+      return;
+    }
+
     async function fetchMoviesInfo() {
       setLoading(true);
       setError("");
 
       try {
         const response = await axios.get(`/api/fetchMoviesInfo`, {
-          params: { selectedMovieDetailsId },
+          params: {
+            selectedMovieDetailsId,
+            mediaType: selectedMovie?.mediaType,
+          },
         });
 
         const data = response.data;
