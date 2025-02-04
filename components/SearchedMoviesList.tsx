@@ -6,7 +6,7 @@ import MovieCardInfo from "./MovieCardInfo";
 import Spinner from "./Spinner";
 
 type SearchedMoviesList = {
-  imdbID: string;
+  tmdbId: string;
   Title: string;
   Poster: string;
 };
@@ -80,7 +80,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
         {/* Displaying list of searched movies */}
         {filteredMovies.map((movie) => (
           <li
-            key={movie.imdbID}
+            key={movie.tmdbId}
             className="flex w-36 flex-shrink-0 transform flex-col items-center transition-transform duration-300 ease-in-out hover:cursor-pointer hover:bg-backgroundLight focus:outline-none xl:hover:scale-105"
           >
             <div
@@ -95,7 +95,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
                 alt={movie.Title}
                 src={movie.Poster}
                 onLoad={() => setImageLoaded(true)}
-                onClick={() => handleSelectMovie(movie.imdbID)}
+                onClick={() => handleSelectMovie(movie.tmdbId)}
               />
               <h3
                 className={`line-clamp-2 text-center text-white ${
@@ -108,7 +108,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
               {/* Button for more details about movie */}
               <button
                 className="group absolute right-4 top-4 rounded-lg bg-background p-1 text-sm font-bold uppercase text-white"
-                onClick={() => setSelectedMovieDetailsId(movie.imdbID)}
+                onClick={() => setSelectedMovieDetailsId(movie.tmdbId)}
               >
                 <span className="hidden -translate-y-2 transform p-2 text-xs text-white opacity-0 transition-all duration-300 group-hover:inline-block group-hover:translate-y-0 group-hover:opacity-100">
                   more details

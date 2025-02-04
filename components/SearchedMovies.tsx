@@ -9,7 +9,7 @@ import Spinner from "./Spinner";
 import axios from "axios";
 
 type MovieObject = {
-  imdbID: string;
+  tmdbId: string;
   Title: string;
   Poster: string;
 };
@@ -22,15 +22,8 @@ const SearchedMovies = () => {
 
   const { query } = useGlobalContext();
 
-  // useEffect for fetching searched movies from query + AbortController for race conditions
+  // useEffect for fetching searched movies from query
   useEffect(() => {
-    if (controllerRef.current) {
-      controllerRef.current.abort();
-    }
-
-    controllerRef.current = new AbortController();
-    const signal = controllerRef.current.signal;
-
     async function fetchMovies() {
       setLoading(true);
       setError("");
@@ -38,13 +31,22 @@ const SearchedMovies = () => {
       try {
         const response = await axios.get(`/api/fetchMovies`, {
           params: { query },
-          signal,
         });
 
         const data = response.data;
-        if (data.Response === "False") throw new Error("Movie not found");
+        if (data.results.length === 0) throw new Error("Movie not found");
 
-        setMovies(data.Search);
+        const transformedMovies = data.results
+          .map((movie: any) => ({
+            tmdbId: movie.id.toString(),
+            Title: movie.title,
+            Poster: movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : "N/A",
+          }))
+          .slice(0, 8);
+
+        setMovies(transformedMovies);
       } catch (error) {
         if (axios.isCancel(error)) {
         } else if (error instanceof Error) {
@@ -67,12 +69,6 @@ const SearchedMovies = () => {
     }
 
     fetchMovies();
-
-    return () => {
-      if (controllerRef.current) {
-        controllerRef.current.abort();
-      }
-    };
   }, [query]);
 
   return (

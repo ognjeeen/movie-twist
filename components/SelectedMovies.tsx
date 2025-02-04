@@ -9,7 +9,7 @@ import { Bungee } from "next/font/google";
 const bungeeFont = Bungee({ weight: "400", subsets: ["latin"] });
 
 type MovieObject = {
-  imdbID: string;
+  tmdbId: string;
   Title: string;
   Poster: string;
 };
@@ -45,12 +45,12 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
   useEffect(() => {
     if (clickedMovieId) {
       const isMovieFound = movies.find(
-        (movie) => movie.imdbID === clickedMovieId,
+        (movie) => movie.tmdbId === clickedMovieId,
       );
 
       if (isMovieFound) {
         const alreadySelected = userSelectedMoviesList.some(
-          (movie) => movie.imdbID === isMovieFound.imdbID,
+          (movie) => movie.tmdbId === isMovieFound.tmdbId,
         );
 
         if (!alreadySelected) {
@@ -98,7 +98,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
   const handleDeleteSelectedMovie = (id: string) => {
     setUserSelectedMoviesList((prevSelectedMovies) =>
-      prevSelectedMovies.filter((movie) => movie.imdbID !== id),
+      prevSelectedMovies.filter((movie) => movie.tmdbId !== id),
     );
 
     setClickedMovieIdsList((prevClickedIds) =>
@@ -135,7 +135,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
   return (
     <>
-      <div className="bg-backgroundLight relative m-auto mt-10 mb-10 w-4/6 rounded-lg pt-6 drop-shadow-lg xl:w-[1150px]">
+      <div className="relative m-auto mb-10 mt-10 w-4/6 rounded-lg bg-backgroundLight pt-6 drop-shadow-lg xl:w-[1150px]">
         {/* Displaying list of selected (added) movies by user */}
         <ul
           className={`flex flex-wrap justify-center ${
@@ -143,7 +143,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
           }`}
         >
           {userSelectedMoviesList.map((movie) => (
-            <li key={movie.imdbID} className="p-4">
+            <li key={movie.tmdbId} className="p-4">
               <div className="group relative h-48 w-32">
                 {/* Slika filma */}
                 <img
@@ -157,13 +157,13 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 <div
                   onClick={() => {
                     !isRandomMovieAnimationActive &&
-                      handleDeleteSelectedMovie(movie.imdbID);
+                      handleDeleteSelectedMovie(movie.tmdbId);
                   }}
                   className={`${
                     !isRandomMovieAnimationActive
                       ? "hover:cursor-pointer"
                       : "hover:cursor-not-allowed"
-                  } bg-opacity-70 absolute inset-0 mx-auto flex flex-col items-center justify-center bg-black p-1 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+                  } absolute inset-0 mx-auto flex flex-col items-center justify-center bg-black bg-opacity-70 p-1 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
                 >
                   <h2 className={`${bungeeFont.className} font-bold`}>
                     {movie.Title}
@@ -177,7 +177,7 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
         {/* Clear All and Random Movie buttons */}
         <div
-          className={`${bungeeFont.className} text-textColor m-auto mt-10 flex flex-col items-center justify-center gap-2 pb-4 text-sm lg:flex lg:flex-row lg:gap-4 lg:text-base`}
+          className={`${bungeeFont.className} m-auto mt-10 flex flex-col items-center justify-center gap-2 pb-4 text-sm text-textColor lg:flex lg:flex-row lg:gap-4 lg:text-base`}
         >
           <button
             onClick={handleDeleteAll}
@@ -205,13 +205,13 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
 
       {/* Card for displaying what application picked as a random movie */}
       {randomPickedMovie && isOpen && (
-        <div className="bg-opacity-40 fixed inset-0 z-10 flex items-center justify-center bg-black">
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-40">
           <Confetti
             width={width}
             height={height}
             numberOfPieces={numberOfConfettiPieces}
           />
-          <div className="bg-backgroundLight relative mx-4 w-full max-w-lg rounded-lg pt-10">
+          <div className="relative mx-4 w-full max-w-lg rounded-lg bg-backgroundLight pt-10">
             <h1
               className={`${bungeeFont.className} ${
                 animeMode ? "text-animeBlueLight" : "text-primaryLight"
@@ -225,13 +225,13 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
               src={randomPickedMovie.Poster}
             />
             <h2
-              className={`${bungeeFont.className} mt-2 mb-4 pb-4 text-center text-xl`}
+              className={`${bungeeFont.className} mb-4 mt-2 pb-4 text-center text-xl`}
             >
               {randomPickedMovie.Title}
             </h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-0 right-0 p-2"
+              className="absolute right-0 top-0 p-2"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -241,8 +241,8 @@ const SelectedMovies = ({ movies }: SelectedMoviesProps) => {
                 stroke="currentColor"
                 className={`size-9 transition-transform duration-300 ease-in-out hover:lg:scale-110 ${
                   animeMode
-                    ? "text-animeBluePrimary hover:text-animeBlueLight transition-colors"
-                    : "text-primary hover:text-primaryLight transition-colors"
+                    ? "text-animeBluePrimary transition-colors hover:text-animeBlueLight"
+                    : "text-primary transition-colors hover:text-primaryLight"
                 }`}
               >
                 <path

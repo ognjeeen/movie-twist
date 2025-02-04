@@ -67,7 +67,7 @@ const MovieCardInfo = ({
           <h1
             className={`${bungeeFont.className} ${
               animeMode ? "text-animeBluePrimary" : "text-primaryLight"
-            } m-auto w-3/4 truncate text-center text-3xl md:text-5xl`}
+            } m-auto line-clamp-1 w-3/4 text-center text-3xl md:text-5xl`}
           >
             {movieInfo?.Title}
           </h1>
@@ -90,7 +90,8 @@ const MovieCardInfo = ({
             <div className="mb-2 mt-2 flex flex-row gap-2">
               {movieGenre?.map((genre, i) => (
                 <span key={i} className="rounded-2xl bg-background p-2 text-sm">
-                  {genre}
+                  {/* {genre} */}
+                  {genre === "N/A" ? "No genre data found" : genre}
                 </span>
               ))}
             </div>
@@ -106,7 +107,10 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {movieInfo?.Actors}
+                  {/* {movieInfo?.Actors} */}
+                  {movieInfo?.Actors === "N/A"
+                    ? "No actor data found"
+                    : movieInfo?.Actors}
                 </span>
               </div>
               <div className="mt-4">
@@ -116,7 +120,10 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {movieInfo?.Director}
+                  {/* {movieInfo?.Director} */}
+                  {movieInfo?.Director === "N/A"
+                    ? "No director data found"
+                    : movieInfo?.Director}
                 </span>
               </div>
               <div className="mt-4">
@@ -126,7 +133,10 @@ const MovieCardInfo = ({
                     animeMode ? "text-animeBluePrimary" : "text-primaryLight"
                   } text-sm sm:text-base`}
                 >
-                  {!movieInfo?.BoxOffice ? "N/A" : movieInfo?.BoxOffice}
+                  {/* {!movieInfo?.BoxOffice ? "N/A" : movieInfo?.BoxOffice} */}
+                  {movieInfo?.BoxOffice === "N/A"
+                    ? "No box office data found"
+                    : movieInfo?.BoxOffice}
                 </span>
               </div>
             </div>
@@ -168,7 +178,11 @@ const MovieCardInfo = ({
         {/* Movie plot */}
         <div className="px-4 py-2">
           <div className="h-20 overflow-scroll rounded-xl bg-background p-3 text-justify text-sm md:h-auto md:overflow-hidden md:text-base lg:overflow-hidden">
-            <span>{movieInfo?.Plot}</span>
+            {movieInfo?.Plot === "N/A" ? (
+              <p className={`${bungeeFont.className}`}>no plot found</p>
+            ) : (
+              <span>{movieInfo?.Plot}</span>
+            )}
           </div>
         </div>
 
