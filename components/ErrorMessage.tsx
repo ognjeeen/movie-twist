@@ -13,12 +13,12 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
   const animeErrorText = animeMode
     ? message.includes("movie")
       ? "Search for movies, TV shows, and anime to add to your random picker list"
-      : "anime not found"
+      : "Title not found"
     : message
-      ? message === "movie not found"
-        ? "movie not found"
+      ? message === "Title not found"
+        ? "Title not found"
         : message
-      : "movie not found";
+      : "Title not found";
 
   return (
     <div className={`${bungeeFont.className} flex items-center justify-center`}>

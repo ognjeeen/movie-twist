@@ -34,7 +34,7 @@ const SearchedMovies = () => {
         });
 
         const data = response.data;
-        if (data.results.length === 0) throw new Error("Movie not found");
+        if (data.results.length === 0) throw new Error("Title not found");
 
         const transformedMovies = data.results
           .map((movie: any) => ({

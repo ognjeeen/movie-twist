@@ -36,7 +36,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
     );
 
     if (!selectedMovie) {
-      setError("Movie not found");
+      setError("Title not found");
       return;
     }
 
@@ -53,7 +53,8 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
         });
 
         const data = response.data;
-        if (data.Response === "False") throw new Error("Movie not found");
+
+        if (data.Response === "False") throw new Error("Title not found");
 
         setMovieInfo(data);
         setIsOpen(true);
@@ -61,7 +62,7 @@ const SearchedMoviesList = ({ movies, setError }: SearchedMoviesListProps) => {
       } catch (error) {
         if (axios.isCancel(error)) {
         } else if (error instanceof Error) {
-          setError(error.message);
+          setError("Information not found");
         } else {
           setError("An unknown error occurred");
         }
