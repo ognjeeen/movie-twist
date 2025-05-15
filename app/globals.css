@@ -4,10 +4,68 @@
 
 :root {
   --bubble-color: #e1ab65;
+  --scrollbar-thumb: rgba(225, 171, 101, 0.5);
+  --scrollbar-track: rgba(225, 171, 101, 0.1);
 }
 
 .dark-mode {
   --bubble-color: #399a99;
+  --scrollbar-thumb: rgba(57, 154, 153, 0.5);
+  --scrollbar-track: rgba(57, 154, 153, 0.1);
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none; /* Remove scrollbar buttons */
+  width: 0;
+  height: 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(225, 171, 101, 0.1); /* Default theme track color */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(225, 171, 101, 0.5); /* Default theme thumb color */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #e1ab65; /* Default theme hover color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Anime mode scrollbar colors */
+.dark-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(57, 154, 153, 0.1) !important;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(57, 154, 153, 0.5) !important;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #399a99 !important;
+}
+
+/* Firefox scrollbar support */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(225, 171, 101, 0.5) transparent; /* Default theme */
+}
+
+.dark-mode .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57, 154, 153, 0.5) transparent !important; /* Anime theme */
 }
 
 @keyframes merge {
@@ -31,33 +89,87 @@
 
 @keyframes greentopBubbles {
   0% {
-    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-      40% 90%, 55% 90%, 70% 90%;
+    background-position:
+      5% 90%,
+      10% 90%,
+      10% 90%,
+      15% 90%,
+      25% 90%,
+      25% 90%,
+      40% 90%,
+      55% 90%,
+      70% 90%;
   }
   50% {
-    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-      50% 50%, 65% 20%, 90% 30%;
+    background-position:
+      0% 80%,
+      0% 20%,
+      10% 40%,
+      20% 0%,
+      30% 30%,
+      22% 50%,
+      50% 50%,
+      65% 20%,
+      90% 30%;
   }
   100% {
-    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-      50% 40%, 65% 10%, 90% 20%;
-    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    background-position:
+      0% 70%,
+      0% 10%,
+      10% 30%,
+      20% -10%,
+      30% 20%,
+      22% 40%,
+      50% 40%,
+      65% 10%,
+      90% 20%;
+    background-size:
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%;
   }
 }
 
 @keyframes greenbottomBubbles {
   0% {
-    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-      70% -10%, 70% 0%;
+    background-position:
+      10% -10%,
+      30% 10%,
+      55% -10%,
+      70% -10%,
+      85% -10%,
+      70% -10%,
+      70% 0%;
   }
   50% {
-    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+    background-position:
+      0% 80%,
+      20% 80%,
+      45% 60%,
+      60% 100%,
+      75% 70%,
+      95% 60%,
       105% 0%;
   }
   100% {
-    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+    background-position:
+      0% 90%,
+      20% 90%,
+      45% 70%,
+      60% 110%,
+      75% 80%,
+      95% 70%,
       110% 10%;
-    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    background-size:
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%;
   }
 }
 
@@ -71,8 +183,8 @@
 
 .button::before,
 .button::after {
-  @apply absolute w-[150%] h-full left-1/2 transform -translate-x-1/2;
-  content: '';
+  @apply absolute left-1/2 h-full w-[150%] -translate-x-1/2 transform;
+  content: "";
   z-index: -1;
   background-repeat: no-repeat;
 }
@@ -102,8 +214,16 @@
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%),
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%),
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%);
-  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
-    10% 10%, 18% 18%;
+  background-size:
+    10% 10%,
+    20% 20%,
+    15% 15%,
+    20% 20%,
+    18% 18%,
+    10% 10%,
+    15% 15%,
+    10% 10%,
+    18% 18%;
   animation: greentopBubbles ease-in-out 0.6s forwards infinite;
 }
 
@@ -125,6 +245,13 @@
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%),
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%),
     radial-gradient(circle, var(--bubble-color) 20%, transparent 20%);
-  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-size:
+    15% 15%,
+    20% 20%,
+    18% 18%,
+    20% 20%,
+    15% 15%,
+    20% 20%,
+    18% 18%;
   animation: greenbottomBubbles ease-in-out 0.6s forwards infinite;
 }
