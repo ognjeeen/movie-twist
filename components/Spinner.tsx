@@ -1,13 +1,7 @@
 import { useGlobalContext } from "@/context/GlobalContext";
-import MoonLoader from "react-spinners/MoonLoader";
 
 type SpinnerProps = {
   loading: boolean;
-};
-
-const override = {
-  display: "block",
-  margin: "100px auto",
 };
 
 const Spinner = ({ loading }: SpinnerProps) => {
@@ -15,14 +9,23 @@ const Spinner = ({ loading }: SpinnerProps) => {
 
   const spinnerColor = animeMode ? "#399a99" : "#C59658";
 
+  if (!loading) return null;
+
   return (
-    <MoonLoader
-      color={spinnerColor}
-      loading={loading}
-      cssOverride={override}
-      size={50}
-      aria-label="Loading Spinner"
-    />
+    <div
+      className="flex items-center justify-center"
+      style={{ margin: "100px auto" }}
+    >
+      <div
+        className="animate-spin rounded-full border-4 border-transparent"
+        style={{
+          borderTopColor: spinnerColor,
+          width: "50px",
+          height: "50px",
+        }}
+        aria-label="Loading Spinner"
+      />
+    </div>
   );
 };
 
